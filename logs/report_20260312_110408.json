@@ -1,0 +1,15 @@
+{
+  "elapsed_seconds": 1250.0,
+  "products_processed": 8,
+  "products_with_fitment": 0,
+  "rows_written": 8,
+  "pct_completeness": 0.0,
+  "pct_fitment_found": 0.0,
+  "pages_html": 0,
+  "pages_playwright": 8,
+  "pages_per_min_html": 0.0,
+  "pages_per_min_playwright": 0.4,
+  "avg_html_ms": 0.0,
+  "avg_pw_ms": 5150.2,
+  "errors": {}
+}

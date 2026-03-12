@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  crawler:
+    build: .
+    container_name: 2407_fitment_crawler
+    volumes:
+      - ./output:/app/output
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - OUTPUT_DIR=/app/output
+      - LOG_DIR=/app/logs
+      - LOG_LEVEL=INFO
+      - REQUEST_DELAY_MIN=1.0
+      - REQUEST_DELAY_MAX=3.0
+      - MAX_RETRIES=5
+      - PLAYWRIGHT_HEADLESS=true
+      - STORAGE_STATE_PATH=/app/config/storage_state_poland.json
+      - ROW_LIMIT=500000
+    # Uncomment to pass extra args:
+    # command: ["--csv", "--no-sitemap"]
+    restart: "no"

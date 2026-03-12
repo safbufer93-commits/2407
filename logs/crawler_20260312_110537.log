@@ -1,0 +1,441 @@
+{"event_time": "2026-03-12T08:05:37.746552", "level": "INFO", "logger": "__main__", "message": "2407.pl fitment crawler starting (Dolphin Anty mode)"}
+{"event_time": "2026-03-12T08:05:37.883097", "level": "INFO", "logger": "__main__", "message": "Setting up Poland/PLN context..."}
+{"event_time": "2026-03-12T08:05:37.979773", "level": "INFO", "logger": "src.renderer", "message": "Starting Dolphin profile 759890630..."}
+{"event_time": "2026-03-12T08:05:39.524723", "level": "INFO", "logger": "src.renderer", "message": "Dolphin started: ws://localhost:55825/devtools/browser/82bd80a4-7fe2-4816-b571-7673d40687d4"}
+{"event_time": "2026-03-12T08:05:43.457955", "level": "INFO", "logger": "src.renderer", "message": "Connected to Dolphin browser"}
+{"event_time": "2026-03-12T08:05:47.346295", "level": "INFO", "logger": "src.renderer", "message": "Poland context ready"}
+{"event_time": "2026-03-12T08:05:47.807293", "level": "INFO", "logger": "src.exporter", "message": "Opened new output file: ./output\\2407_fitment_PLN_0001.xlsx"}
+{"event_time": "2026-03-12T08:05:47.807293", "level": "INFO", "logger": "__main__", "message": "Processing: Автозапчасти — https://2407.pl/ru/avtozapchasti/"}
+{"event_time": "2026-03-12T08:05:47.807293", "level": "INFO", "logger": "src.crawler", "message": "Seed: Автозапчасти — https://2407.pl/ru/avtozapchasti/ (scope: /ru/avtozapchasti/)"}
+{"event_time": "2026-03-12T08:05:47.807293", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=0): https://2407.pl/ru/avtozapchasti/"}
+{"event_time": "2026-03-12T08:05:52.528994", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/avtozapchasti/"}
+{"event_time": "2026-03-12T08:05:52.537964", "level": "INFO", "logger": "src.crawler", "message": "Found 0 subcats within /ru/avtozapchasti/"}
+{"event_time": "2026-03-12T08:05:52.586800", "level": "WARNING", "logger": "src.crawler", "message": "No subcats and no products at: https://2407.pl/ru/avtozapchasti/"}
+{"event_time": "2026-03-12T08:05:52.586800", "level": "INFO", "logger": "__main__", "message": "Processing: Автозапчасти — https://2407.pl/ru/uzly-detali-dvigatelja/"}
+{"event_time": "2026-03-12T08:05:52.586800", "level": "INFO", "logger": "src.crawler", "message": "Seed: Автозапчасти — https://2407.pl/ru/uzly-detali-dvigatelja/ (scope: /ru/uzly-detali-dvigatelja/)"}
+{"event_time": "2026-03-12T08:05:52.586800", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=0): https://2407.pl/ru/uzly-detali-dvigatelja/"}
+{"event_time": "2026-03-12T08:05:56.377159", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/uzly-detali-dvigatelja/"}
+{"event_time": "2026-03-12T08:05:56.381146", "level": "INFO", "logger": "src.crawler", "message": "Found 0 subcats within /ru/uzly-detali-dvigatelja/"}
+{"event_time": "2026-03-12T08:05:56.414035", "level": "WARNING", "logger": "src.crawler", "message": "No subcats and no products at: https://2407.pl/ru/uzly-detali-dvigatelja/"}
+{"event_time": "2026-03-12T08:05:56.415033", "level": "INFO", "logger": "__main__", "message": "Processing: Автозапчасти — https://2407.pl/ru/detali-transmissii/"}
+{"event_time": "2026-03-12T08:05:56.416029", "level": "INFO", "logger": "src.crawler", "message": "Seed: Автозапчасти — https://2407.pl/ru/detali-transmissii/ (scope: /ru/detali-transmissii/)"}
+{"event_time": "2026-03-12T08:05:56.416029", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=0): https://2407.pl/ru/detali-transmissii/"}
+{"event_time": "2026-03-12T08:06:01.570618", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-transmissii/"}
+{"event_time": "2026-03-12T08:06:01.574604", "level": "INFO", "logger": "src.crawler", "message": "Found 0 subcats within /ru/detali-transmissii/"}
+{"event_time": "2026-03-12T08:06:01.628425", "level": "WARNING", "logger": "src.crawler", "message": "No subcats and no products at: https://2407.pl/ru/detali-transmissii/"}
+{"event_time": "2026-03-12T08:06:01.629422", "level": "INFO", "logger": "__main__", "message": "Processing: Автозапчасти — https://2407.pl/ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:01.629422", "level": "INFO", "logger": "src.crawler", "message": "Seed: Автозапчасти — https://2407.pl/ru/detali-tormoznoj-sistemy/ (scope: /ru/detali-tormoznoj-sistemy/)"}
+{"event_time": "2026-03-12T08:06:01.629422", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=0): https://2407.pl/ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:05.795599", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:05.798589", "level": "INFO", "logger": "src.crawler", "message": "Found 25 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:05.799585", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=1): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/"}
+{"event_time": "2026-03-12T08:06:14.236295", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/"}
+{"event_time": "2026-03-12T08:06:14.240278", "level": "INFO", "logger": "src.crawler", "message": "Found 30 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:14.240278", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic/"}
+{"event_time": "2026-03-12T08:06:20.944156", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic/"}
+{"event_time": "2026-03-12T08:06:20.949140", "level": "INFO", "logger": "src.crawler", "message": "Found 30 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:20.949140", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-kupe-ej-em1-6594/"}
+{"event_time": "2026-03-12T08:06:26.036910", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-kupe-ej-em1-6594/"}
+{"event_time": "2026-03-12T08:06:26.040898", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:26.040898", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-universal-wc-6581/"}
+{"event_time": "2026-03-12T08:06:30.784904", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-universal-wc-6581/"}
+{"event_time": "2026-03-12T08:06:30.788890", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:30.788890", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iv-hetchbek-ec-ed-ee-6585/"}
+{"event_time": "2026-03-12T08:06:36.389578", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iv-hetchbek-ec-ed-ee-6585/"}
+{"event_time": "2026-03-12T08:06:36.397553", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:36.398549", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-hetchbek-ss-sl-6582/"}
+{"event_time": "2026-03-12T08:06:42.742512", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-hetchbek-ss-sl-6582/"}
+{"event_time": "2026-03-12T08:06:42.752478", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:42.752478", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-fastbek-ma-mb-6608/"}
+{"event_time": "2026-03-12T08:06:48.176792", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-fastbek-ma-mb-6608/"}
+{"event_time": "2026-03-12T08:06:48.237591", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:48.273469", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-hetchbek-eu-ep-ev-6596/"}
+{"event_time": "2026-03-12T08:06:54.052689", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-hetchbek-eu-ep-ev-6596/"}
+{"event_time": "2026-03-12T08:06:54.056676", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:54.057674", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-sedan-ej-ek-6595/"}
+{"event_time": "2026-03-12T08:06:59.308982", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-sedan-ej-ek-6595/"}
+{"event_time": "2026-03-12T08:06:59.317479", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:06:59.317479", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-sedan-sf-6579/"}
+{"event_time": "2026-03-12T08:07:03.865006", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-sedan-sf-6579/"}
+{"event_time": "2026-03-12T08:07:03.868993", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:03.868993", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-sedan-fb-fg-6589/"}
+{"event_time": "2026-03-12T08:07:09.575973", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-sedan-fb-fg-6589/"}
+{"event_time": "2026-03-12T08:07:09.624809", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:09.625805", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-hetchbek-ej-ek-6593/"}
+{"event_time": "2026-03-12T08:07:14.455690", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-hetchbek-ej-ek-6593/"}
+{"event_time": "2026-03-12T08:07:14.459675", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:14.459675", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-kupe-ej-6591/"}
+{"event_time": "2026-03-12T08:07:19.628506", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-kupe-ej-6591/"}
+{"event_time": "2026-03-12T08:07:19.634486", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:19.637475", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-viii-sedan-fd-fa-6600/"}
+{"event_time": "2026-03-12T08:07:25.141581", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-viii-sedan-fd-fa-6600/"}
+{"event_time": "2026-03-12T08:07:25.153542", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:25.171484", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iv-sedan-ed-6586/"}
+{"event_time": "2026-03-12T08:07:30.663608", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iv-sedan-ed-6586/"}
+{"event_time": "2026-03-12T08:07:30.671581", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:30.671581", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-fk-6587/"}
+{"event_time": "2026-03-12T08:07:36.964108", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-fk-6587/"}
+{"event_time": "2026-03-12T08:07:36.969089", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:36.970085", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-tourer-fk-6588/"}
+{"event_time": "2026-03-12T08:07:43.281977", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ix-tourer-fk-6588/"}
+{"event_time": "2026-03-12T08:07:43.285964", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:43.285964", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-hetchbek-sb-6577/"}
+{"event_time": "2026-03-12T08:07:47.773955", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-hetchbek-sb-6577/"}
+{"event_time": "2026-03-12T08:07:47.779936", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:47.783921", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-kupe-em2-6597/"}
+{"event_time": "2026-03-12T08:07:52.487380", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-kupe-em2-6597/"}
+{"event_time": "2026-03-12T08:07:52.493361", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:52.494357", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-x-sedan-fc-6601/"}
+{"event_time": "2026-03-12T08:07:58.870259", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-x-sedan-fc-6601/"}
+{"event_time": "2026-03-12T08:07:58.874245", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:07:58.874245", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-aerodeck-mb-mc-6607/"}
+{"event_time": "2026-03-12T08:08:05.008858", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vi-aerodeck-mb-mc-6607/"}
+{"event_time": "2026-03-12T08:08:05.014835", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:05.014835", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-hetchbek-eg-6590/"}
+{"event_time": "2026-03-12T08:08:09.655412", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-hetchbek-eg-6590/"}
+{"event_time": "2026-03-12T08:08:09.661393", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:09.667373", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-x-hetchbek-fc-fk-14750/"}
+{"event_time": "2026-03-12T08:08:15.312839", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-x-hetchbek-fc-fk-14750/"}
+{"event_time": "2026-03-12T08:08:15.316825", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:15.317822", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-shuttle-an-ar-6578/"}
+{"event_time": "2026-03-12T08:08:20.618049", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-shuttle-an-ar-6578/"}
+{"event_time": "2026-03-12T08:08:20.621038", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:20.622035", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-sedan-eg-eh-6592/"}
+{"event_time": "2026-03-12T08:08:26.143576", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-v-sedan-eg-eh-6592/"}
+{"event_time": "2026-03-12T08:08:26.148560", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:26.149556", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iii-sedan-am-ak-au-6584/"}
+{"event_time": "2026-03-12T08:08:32.236275", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iii-sedan-am-ak-au-6584/"}
+{"event_time": "2026-03-12T08:08:32.244250", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:32.245246", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-shuttle-ee-6580/"}
+{"event_time": "2026-03-12T08:08:38.857682", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-ii-shuttle-ee-6580/"}
+{"event_time": "2026-03-12T08:08:38.862665", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:38.863662", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-viii-hetchbek-fn-fk-6599/"}
+{"event_time": "2026-03-12T08:08:45.391719", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-viii-hetchbek-fn-fk-6599/"}
+{"event_time": "2026-03-12T08:08:45.396703", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:45.396703", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iii-hetchbek-al-aj-ag-ah-6583/"}
+{"event_time": "2026-03-12T08:08:50.581356", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-iii-hetchbek-al-aj-ag-ah-6583/"}
+{"event_time": "2026-03-12T08:08:50.585343", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:50.586339", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-sedan-es-6598/"}
+{"event_time": "2026-03-12T08:08:56.880931", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/civic-vii-sedan-es-6598/"}
+{"event_time": "2026-03-12T08:08:56.884917", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:08:56.884917", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/fit/"}
+{"event_time": "2026-03-12T08:09:03.287258", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/fit/"}
+{"event_time": "2026-03-12T08:09:03.292292", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:03.292292", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/fit-iii-ge-gg-gp-6639/"}
+{"event_time": "2026-03-12T08:09:08.430058", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/fit-iii-ge-gg-gp-6639/"}
+{"event_time": "2026-03-12T08:09:08.434045", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:08.435042", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz/"}
+{"event_time": "2026-03-12T08:09:14.548069", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz/"}
+{"event_time": "2026-03-12T08:09:14.559034", "level": "INFO", "logger": "src.crawler", "message": "Found 6 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:14.560030", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-5-gr-6306-16047/"}
+{"event_time": "2026-03-12T08:09:20.385853", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-5-gr-6306-16047/"}
+{"event_time": "2026-03-12T08:09:20.391833", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:20.395819", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-iv-gk-6665/"}
+{"event_time": "2026-03-12T08:09:25.210999", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-iv-gk-6665/"}
+{"event_time": "2026-03-12T08:09:25.214987", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:25.214987", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-aa-6663/"}
+{"event_time": "2026-03-12T08:09:31.847346", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-aa-6663/"}
+{"event_time": "2026-03-12T08:09:31.851333", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:31.851333", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-ii-gd-ge3-6664/"}
+{"event_time": "2026-03-12T08:09:36.944266", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/jazz-ii-gd-ge3-6664/"}
+{"event_time": "2026-03-12T08:09:36.948253", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:36.949249", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/e/"}
+{"event_time": "2026-03-12T08:09:43.617936", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/e/"}
+{"event_time": "2026-03-12T08:09:43.621924", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:43.627904", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/e-zc7-16090-16052/"}
+{"event_time": "2026-03-12T08:09:49.497176", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/e-zc7-16090-16052/"}
+{"event_time": "2026-03-12T08:09:49.501163", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:49.501163", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight/"}
+{"event_time": "2026-03-12T08:09:56.480803", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight/"}
+{"event_time": "2026-03-12T08:09:56.487777", "level": "INFO", "logger": "src.crawler", "message": "Found 4 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:09:56.487777", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight-ze-6653/"}
+{"event_time": "2026-03-12T08:10:03.323231", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight-ze-6653/"}
+{"event_time": "2026-03-12T08:10:03.327220", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:03.328215", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight-ze-6654/"}
+{"event_time": "2026-03-12T08:10:09.383298", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/insight-ze-6654/"}
+{"event_time": "2026-03-12T08:10:09.389278", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:09.389278", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx/"}
+{"event_time": "2026-03-12T08:10:16.711564", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx/"}
+{"event_time": "2026-03-12T08:10:16.715552", "level": "INFO", "logger": "src.crawler", "message": "Found 5 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:16.716548", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kabriolet-na-6707/"}
+{"event_time": "2026-03-12T08:10:22.256262", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kabriolet-na-6707/"}
+{"event_time": "2026-03-12T08:10:22.261244", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:22.261244", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kupe-na-6709/"}
+{"event_time": "2026-03-12T08:10:27.093048", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kupe-na-6709/"}
+{"event_time": "2026-03-12T08:10:27.097034", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:27.098031", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kupe-6708/"}
+{"event_time": "2026-03-12T08:10:33.505359", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/nsx-kupe-6708/"}
+{"event_time": "2026-03-12T08:10:33.510343", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:33.510343", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend/"}
+{"event_time": "2026-03-12T08:10:38.580777", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend/"}
+{"event_time": "2026-03-12T08:10:38.586760", "level": "INFO", "logger": "src.crawler", "message": "Found 8 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:38.589747", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-kupe-ka-6672/"}
+{"event_time": "2026-03-12T08:10:44.595263", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-kupe-ka-6672/"}
+{"event_time": "2026-03-12T08:10:44.602240", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:44.602240", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-iv-kb-6676/"}
+{"event_time": "2026-03-12T08:10:50.024037", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-iv-kb-6676/"}
+{"event_time": "2026-03-12T08:10:50.036000", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:50.036995", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-hs-ka-6671/"}
+{"event_time": "2026-03-12T08:10:56.200242", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-hs-ka-6671/"}
+{"event_time": "2026-03-12T08:10:56.205221", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:10:56.206219", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-ii-kupe-ka-6674/"}
+{"event_time": "2026-03-12T08:11:02.023852", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-ii-kupe-ka-6674/"}
+{"event_time": "2026-03-12T08:11:02.033819", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:02.034815", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-ii-ka-6673/"}
+{"event_time": "2026-03-12T08:11:07.279620", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-ii-ka-6673/"}
+{"event_time": "2026-03-12T08:11:07.286598", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:07.289587", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-iii-ka-6675/"}
+{"event_time": "2026-03-12T08:11:13.774017", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/legend-iii-ka-6675/"}
+{"event_time": "2026-03-12T08:11:13.777008", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:13.778004", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey/"}
+{"event_time": "2026-03-12T08:11:19.757451", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey/"}
+{"event_time": "2026-03-12T08:11:19.762782", "level": "INFO", "logger": "src.crawler", "message": "Found 6 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:19.762782", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-14756/"}
+{"event_time": "2026-03-12T08:11:24.657857", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-14756/"}
+{"event_time": "2026-03-12T08:11:24.662840", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:24.662840", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-rl3-rl4-6718/"}
+{"event_time": "2026-03-12T08:11:30.169088", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-rl3-rl4-6718/"}
+{"event_time": "2026-03-12T08:11:30.173076", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:30.174072", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-ra-6715/"}
+{"event_time": "2026-03-12T08:11:35.885023", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-ra-6715/"}
+{"event_time": "2026-03-12T08:11:35.889010", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:35.890009", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-rb-6716/"}
+{"event_time": "2026-03-12T08:11:42.135220", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/odyssey-rb-6716/"}
+{"event_time": "2026-03-12T08:11:42.139208", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:42.139208", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/logo/"}
+{"event_time": "2026-03-12T08:11:47.485290", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/logo/"}
+{"event_time": "2026-03-12T08:11:47.490276", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:11:47.491271", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/logo-ga-6683/"}
+{"event_time": "2026-03-12T08:12:14.668885", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/logo-ga-6683/"}
+{"event_time": "2026-03-12T08:12:14.673870", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:14.674866", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/quintet/"}
+{"event_time": "2026-03-12T08:12:20.826271", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/quintet/"}
+{"event_time": "2026-03-12T08:12:20.834245", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:20.837234", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/quintet-su-6737/"}
+{"event_time": "2026-03-12T08:12:26.022459", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/quintet-su-6737/"}
+{"event_time": "2026-03-12T08:12:26.027444", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:26.029437", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto/"}
+{"event_time": "2026-03-12T08:12:31.638115", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto/"}
+{"event_time": "2026-03-12T08:12:31.643098", "level": "INFO", "logger": "src.crawler", "message": "Found 4 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:31.644097", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto-sedan-hww-6615/"}
+{"event_time": "2026-03-12T08:12:37.438149", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto-sedan-hww-6615/"}
+{"event_time": "2026-03-12T08:12:37.445127", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:37.445127", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto-hw-ma-6614/"}
+{"event_time": "2026-03-12T08:12:41.616085", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/concerto-hw-ma-6614/"}
+{"event_time": "2026-03-12T08:12:41.620072", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:41.621069", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v/"}
+{"event_time": "2026-03-12T08:12:47.351932", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v/"}
+{"event_time": "2026-03-12T08:12:47.356915", "level": "INFO", "logger": "src.crawler", "message": "Found 4 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:47.356915", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v-gh-6651/"}
+{"event_time": "2026-03-12T08:12:52.070802", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v-gh-6651/"}
+{"event_time": "2026-03-12T08:12:52.074789", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:52.074789", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v-ru-6652/"}
+{"event_time": "2026-03-12T08:12:57.150132", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/hr-v-ru-6652/"}
+{"event_time": "2026-03-12T08:12:57.154119", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:12:57.154119", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty/"}
+{"event_time": "2026-03-12T08:13:03.598395", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty/"}
+{"event_time": "2026-03-12T08:13:03.602383", "level": "INFO", "logger": "src.crawler", "message": "Found 4 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:03.602383", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty-tn-6544/"}
+{"event_time": "2026-03-12T08:13:08.940773", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty-tn-6544/"}
+{"event_time": "2026-03-12T08:13:08.946755", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:08.946755", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty-kabina-s-bortovoj-platformoj-tn-14745/"}
+{"event_time": "2026-03-12T08:13:13.464589", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/acty-kabina-s-bortovoj-platformoj-tn-14745/"}
+{"event_time": "2026-03-12T08:13:13.468574", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:13.469570", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/cr-z/"}
+{"event_time": "2026-03-12T08:13:19.641547", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/cr-z/"}
+{"event_time": "2026-03-12T08:13:19.646530", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:19.647526", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/cr-z-zf-6626/"}
+{"event_time": "2026-03-12T08:13:24.541985", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/cr-z-zf-6626/"}
+{"event_time": "2026-03-12T08:13:24.545970", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:24.546967", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/s2000/"}
+{"event_time": "2026-03-12T08:13:30.685834", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/s2000/"}
+{"event_time": "2026-03-12T08:13:30.690818", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:30.690818", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/s2000-ap-6743/"}
+{"event_time": "2026-03-12T08:13:40.005187", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/s2000-ap-6743/"}
+{"event_time": "2026-03-12T08:13:40.011166", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:40.011166", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/clarity/"}
+{"event_time": "2026-03-12T08:13:44.792331", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/clarity/"}
+{"event_time": "2026-03-12T08:13:44.796317", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:44.797314", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/clarity-sedan-zc-6609/"}
+{"event_time": "2026-03-12T08:13:50.722082", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/clarity-sedan-zc-6609/"}
+{"event_time": "2026-03-12T08:13:50.730055", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:50.730055", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot/"}
+{"event_time": "2026-03-12T08:13:57.174273", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot/"}
+{"event_time": "2026-03-12T08:13:57.178260", "level": "INFO", "logger": "src.crawler", "message": "Found 5 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:13:57.179257", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6726/"}
+{"event_time": "2026-03-12T08:14:02.975860", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6726/"}
+{"event_time": "2026-03-12T08:14:02.980844", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:02.980844", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6727/"}
+{"event_time": "2026-03-12T08:14:08.957808", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6727/"}
+{"event_time": "2026-03-12T08:14:08.962791", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:08.962791", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6725/"}
+{"event_time": "2026-03-12T08:14:13.632336", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/pilot-6725/"}
+{"event_time": "2026-03-12T08:14:13.636324", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:13.636324", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra/"}
+{"event_time": "2026-03-12T08:14:20.441791", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra/"}
+{"event_time": "2026-03-12T08:14:20.446773", "level": "INFO", "logger": "src.crawler", "message": "Found 7 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:20.446773", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-kupe-dc2-dc4-6657/"}
+{"event_time": "2026-03-12T08:14:26.380629", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-kupe-dc2-dc4-6657/"}
+{"event_time": "2026-03-12T08:14:26.384616", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:26.385613", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-kupe-dc5-6658/"}
+{"event_time": "2026-03-12T08:14:31.555080", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-kupe-dc5-6658/"}
+{"event_time": "2026-03-12T08:14:31.560063", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:31.560063", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-hetchbek-da-6661/"}
+{"event_time": "2026-03-12T08:14:37.783080", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-hetchbek-da-6661/"}
+{"event_time": "2026-03-12T08:14:37.790056", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:37.790056", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-sedan-db6-db7-db8-db9-6660/"}
+{"event_time": "2026-03-12T08:14:43.597165", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-sedan-db6-db7-db8-db9-6660/"}
+{"event_time": "2026-03-12T08:14:43.601151", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:43.601151", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-sedan-da5-da6-da7-da8-da9-db1-db2-6659/"}
+{"event_time": "2026-03-12T08:14:48.378476", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/integra-sedan-da5-da6-da7-da8-da9-db1-db2-6659/"}
+{"event_time": "2026-03-12T08:14:48.384456", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:48.384456", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/ridgeline/"}
+{"event_time": "2026-03-12T08:14:52.946586", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/ridgeline/"}
+{"event_time": "2026-03-12T08:14:52.950574", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:52.950574", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/ridgeline-yk-6741/"}
+{"event_time": "2026-03-12T08:14:58.434318", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/ridgeline-yk-6741/"}
+{"event_time": "2026-03-12T08:14:58.440298", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:14:58.440298", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord/"}
+{"event_time": "2026-03-12T08:15:03.609107", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord/"}
+{"event_time": "2026-03-12T08:15:03.614091", "level": "INFO", "logger": "src.crawler", "message": "Found 29 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:03.615087", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-cb-6518/"}
+{"event_time": "2026-03-12T08:15:08.939850", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-cb-6518/"}
+{"event_time": "2026-03-12T08:15:08.943837", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:08.943837", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-kupe-cg-6528/"}
+{"event_time": "2026-03-12T08:15:14.791099", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-kupe-cg-6528/"}
+{"event_time": "2026-03-12T08:15:14.875820", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:14.875820", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-tourer-cm-cn-6531/"}
+{"event_time": "2026-03-12T08:15:19.996023", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-tourer-cm-cn-6531/"}
+{"event_time": "2026-03-12T08:15:20.001006", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:20.002004", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-cl-cn-6529/"}
+{"event_time": "2026-03-12T08:15:24.887503", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-cl-cn-6529/"}
+{"event_time": "2026-03-12T08:15:24.892484", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:24.893480", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-x-sedan-cv-14744/"}
+{"event_time": "2026-03-12T08:15:30.706768", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-x-sedan-cv-14744/"}
+{"event_time": "2026-03-12T08:15:30.709758", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:30.710758", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ii-ac-ad-6513/"}
+{"event_time": "2026-03-12T08:15:34.817277", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ii-ac-ad-6513/"}
+{"event_time": "2026-03-12T08:15:34.822260", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:34.822260", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iii-ca-6515/"}
+{"event_time": "2026-03-12T08:15:41.173655", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iii-ca-6515/"}
+{"event_time": "2026-03-12T08:15:41.177609", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:41.177609", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-kupe-cd-6525/"}
+{"event_time": "2026-03-12T08:15:46.480481", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-kupe-cd-6525/"}
+{"event_time": "2026-03-12T08:15:46.485465", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:46.485465", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-sj-sy-6511/"}
+{"event_time": "2026-03-12T08:15:51.813666", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-sj-sy-6511/"}
+{"event_time": "2026-03-12T08:15:51.819646", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:51.821639", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-ce-cf-6524/"}
+{"event_time": "2026-03-12T08:15:57.313798", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-ce-cf-6524/"}
+{"event_time": "2026-03-12T08:15:57.318782", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:15:57.321772", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-viii-universal-cw-6534/"}
+{"event_time": "2026-03-12T08:16:01.974172", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-viii-universal-cw-6534/"}
+{"event_time": "2026-03-12T08:16:01.979156", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:01.979156", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-hetchbek-sj-sy-6512/"}
+{"event_time": "2026-03-12T08:16:08.446170", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-hetchbek-sj-sy-6512/"}
+{"event_time": "2026-03-12T08:16:08.452150", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:08.452150", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-kupe-cb-cc-6520/"}
+{"event_time": "2026-03-12T08:16:13.256731", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-kupe-cb-cc-6520/"}
+{"event_time": "2026-03-12T08:16:13.261715", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:13.261715", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ix-kupe-6521/"}
+{"event_time": "2026-03-12T08:16:19.066741", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ix-kupe-6521/"}
+{"event_time": "2026-03-12T08:16:19.070727", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:19.071724", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ii-hetchbek-ac-ad-6514/"}
+{"event_time": "2026-03-12T08:16:24.401520", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ii-hetchbek-ac-ad-6514/"}
+{"event_time": "2026-03-12T08:16:24.406504", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:24.406504", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-hetchbek-tf-6537/"}
+{"event_time": "2026-03-12T08:16:30.314473", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-hetchbek-tf-6537/"}
+{"event_time": "2026-03-12T08:16:30.317463", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:30.317463", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-kupe-cm-6535/"}
+{"event_time": "2026-03-12T08:16:34.604553", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-kupe-cm-6535/"}
+{"event_time": "2026-03-12T08:16:34.608541", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:34.608541", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-cc-cd-6523/"}
+{"event_time": "2026-03-12T08:16:39.901888", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-cc-cd-6523/"}
+{"event_time": "2026-03-12T08:16:39.905875", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:39.906871", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-viii-cu-6533/"}
+{"event_time": "2026-03-12T08:16:44.877269", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-viii-cu-6533/"}
+{"event_time": "2026-03-12T08:16:44.882254", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:44.882254", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-aerodeck-ce-6538/"}
+{"event_time": "2026-03-12T08:16:50.286231", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-v-aerodeck-ce-6538/"}
+{"event_time": "2026-03-12T08:16:50.290218", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:50.290218", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-aerodeck-cb-6519/"}
+{"event_time": "2026-03-12T08:16:55.241553", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iv-aerodeck-cb-6519/"}
+{"event_time": "2026-03-12T08:16:55.249528", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:16:55.250524", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-aerodeck-cf-6539/"}
+{"event_time": "2026-03-12T08:17:00.337114", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-aerodeck-cf-6539/"}
+{"event_time": "2026-03-12T08:17:00.342098", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:00.342098", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-cm-usa-6530/"}
+{"event_time": "2026-03-12T08:17:05.959577", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vii-cm-usa-6530/"}
+{"event_time": "2026-03-12T08:17:05.965558", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:05.965558", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-hetchbek-ch-cl-6527/"}
+{"event_time": "2026-03-12T08:17:11.461687", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-hetchbek-ch-cl-6527/"}
+{"event_time": "2026-03-12T08:17:11.466672", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:11.466672", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ix-sedan-6522/"}
+{"event_time": "2026-03-12T08:17:17.770124", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-ix-sedan-6522/"}
+{"event_time": "2026-03-12T08:17:17.774111", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:17.774111", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-ch-ck-cg-6526/"}
+{"event_time": "2026-03-12T08:17:23.838617", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-vi-ch-ck-cg-6526/"}
+{"event_time": "2026-03-12T08:17:23.842602", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:23.843599", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iii-aerodeck-ca-6516/"}
+{"event_time": "2026-03-12T08:17:28.773600", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/accord-iii-aerodeck-ca-6516/"}
+{"event_time": "2026-03-12T08:17:28.789546", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:28.789546", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/beat/"}
+{"event_time": "2026-03-12T08:17:33.848450", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/beat/"}
+{"event_time": "2026-03-12T08:17:33.853434", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:33.854430", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/beat-pp-6552/"}
+{"event_time": "2026-03-12T08:17:39.091184", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/beat-pp-6552/"}
+{"event_time": "2026-03-12T08:17:39.098161", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:39.099158", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crosstour/"}
+{"event_time": "2026-03-12T08:17:44.439212", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crosstour/"}
+{"event_time": "2026-03-12T08:17:44.444197", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:17:44.444197", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crosstour-6618/"}
+{"event_time": "2026-03-12T08:18:11.042870", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crosstour-6618/"}
+{"event_time": "2026-03-12T08:18:11.047853", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:11.048849", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx/"}
+{"event_time": "2026-03-12T08:18:16.450171", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx/"}
+{"event_time": "2026-03-12T08:18:16.453160", "level": "INFO", "logger": "src.crawler", "message": "Found 5 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:16.453160", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-ii-ed-ee-6624/"}
+{"event_time": "2026-03-12T08:18:22.589495", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-ii-ed-ee-6624/"}
+{"event_time": "2026-03-12T08:18:22.649296", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:22.677204", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-af-as-6623/"}
+{"event_time": "2026-03-12T08:18:28.830736", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-af-as-6623/"}
+{"event_time": "2026-03-12T08:18:28.835718", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:28.835718", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-iii-eh-eg-6625/"}
+{"event_time": "2026-03-12T08:18:33.882617", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/crx-iii-eh-eg-6625/"}
+{"event_time": "2026-03-12T08:18:33.887601", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:33.887601", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/shuttle/"}
+{"event_time": "2026-03-12T08:18:40.336618", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/shuttle/"}
+{"event_time": "2026-03-12T08:18:40.340606", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:40.340606", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/shuttle-ra-6751/"}
+{"event_time": "2026-03-12T08:18:45.564728", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/shuttle-ra-6751/"}
+{"event_time": "2026-03-12T08:18:45.569712", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:45.569712", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude/"}
+{"event_time": "2026-03-12T08:18:52.059290", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude/"}
+{"event_time": "2026-03-12T08:18:52.064273", "level": "INFO", "logger": "src.crawler", "message": "Found 7 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:52.065270", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-v-bb-6734/"}
+{"event_time": "2026-03-12T08:18:57.414204", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-v-bb-6734/"}
+{"event_time": "2026-03-12T08:18:57.419188", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:18:57.419188", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-iv-bb-6733/"}
+{"event_time": "2026-03-12T08:19:01.784468", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-iv-bb-6733/"}
+{"event_time": "2026-03-12T08:19:01.788455", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:01.788455", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-iii-ba-6732/"}
+{"event_time": "2026-03-12T08:19:07.217353", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-iii-ba-6732/"}
+{"event_time": "2026-03-12T08:19:07.221339", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:07.222335", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-ii-ab-6731/"}
+{"event_time": "2026-03-12T08:19:13.111809", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-ii-ab-6731/"}
+{"event_time": "2026-03-12T08:19:13.115795", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:13.115795", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-kupe-sn-6730/"}
+{"event_time": "2026-03-12T08:19:18.938902", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/prelude-kupe-sn-6730/"}
+{"event_time": "2026-03-12T08:19:18.944881", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:18.944881", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/stream/"}
+{"event_time": "2026-03-12T08:19:25.309038", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/stream/"}
+{"event_time": "2026-03-12T08:19:25.313025", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:25.314021", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=3): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/stream-rn-6765/"}
+{"event_time": "2026-03-12T08:19:31.280986", "level": "INFO", "logger": "src.crawler", "message": "Page type: directory — https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/stream-rn-6765/"}
+{"event_time": "2026-03-12T08:19:31.304907", "level": "INFO", "logger": "src.crawler", "message": "Found 3 subcats within /ru/detali-tormoznoj-sistemy/"}
+{"event_time": "2026-03-12T08:19:31.305904", "level": "INFO", "logger": "src.crawler", "message": "Crawling (depth=2): https://2407.pl/ru/detali-tormoznoj-sistemy/honda-cars/capa/"}
+{"event_time": "2026-03-12T08:19:31.322845", "level": "INFO", "logger": "__main__", "message": "Interrupted"}
+{"event_time": "2026-03-12T08:19:31.338792", "level": "INFO", "logger": "src.exporter", "message": "Saved ./output\\2407_fitment_PLN_0001.xlsx (0 data rows)"}
+{"event_time": "2026-03-12T08:19:31.338792", "level": "INFO", "logger": "src.exporter", "message": "Export complete. Total rows: 0, files: 1"}
+{"event_time": "2026-03-12T08:19:32.127664", "level": "INFO", "logger": "src.renderer", "message": "Dolphin profile stopped"}
+{"event_time": "2026-03-12T08:19:32.155570", "level": "INFO", "logger": "__main__", "message": "Done. Output: ./output"}

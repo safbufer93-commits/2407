@@ -378,3 +378,50 @@ class CategoryCrawler:
                 if norm_np not in visited_pages:
                     visited_pages.add(norm_np)
                     pages_to_visit.append(np)
+
+    def crawl_category_direct(self, url: str, section: str,
+                               subsection: str) -> Generator[dict, None, None]:
+        """Crawl a single known category URL directly (from a categories file).
+        Treats the URL as a listing; if the page turns out to be a directory
+        (subcategory tiles), descends one level only.
+        """
+        norm = normalize_url(url)
+        if norm in self.visited_dirs:
+            return
+        self.visited_dirs.add(norm)
+
+        if is_forbidden_url(url):
+            return
+
+        logger.info(f"Direct category: {url}")
+        html = self.renderer.fetch_html(url)
+        if not html:
+            logger.warning(f"Empty response: {url}")
+            return
+
+        soup = BeautifulSoup(html, "lxml")
+        page_type = detect_page_type(soup)
+
+        if page_type == "listing":
+            yield from self._crawl_listing(url, soup, section, subsection, url)
+        else:
+            # Try as listing first (products may still be present)
+            product_links = extract_product_links(soup, self.base_url)
+            if product_links:
+                yield from self._crawl_listing(url, soup, section, subsection, url)
+            else:
+                # Directory: descend one level using flat (tile-image) subcats
+                subcat_links = extract_subcategory_links(
+                    soup, self.base_url, urlparse(url).path, strict=False)
+                logger.info(f"  -> directory, found {len(subcat_links)} subcats")
+                for sub_url in subcat_links:
+                    sub_norm = normalize_url(sub_url)
+                    if sub_norm in self.visited_dirs:
+                        continue
+                    self.visited_dirs.add(sub_norm)
+                    sub_html = self.renderer.fetch_html(sub_url)
+                    if not sub_html:
+                        continue
+                    sub_soup = BeautifulSoup(sub_html, "lxml")
+                    yield from self._crawl_listing(
+                        sub_url, sub_soup, section, subsection, sub_url)

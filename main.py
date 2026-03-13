@@ -16,6 +16,7 @@ Options:
     --log-level LEVEL   DEBUG, INFO, WARNING (default: INFO)
 """
 import argparse
+import csv
 import json
 import logging
 import os
@@ -38,6 +39,50 @@ from src.exporter import RotatingXlsxWriter, CsvWriter
 logger = logging.getLogger(__name__)
 
 
+def load_categories_file(path: str) -> list:
+    """Load category URLs from a CSV or plain text file.
+    Accepts:
+      - CSV with a 'url' / 'loc' / 'address' column (any case)
+      - CSV whose first column contains https:// URLs
+      - Plain text: one URL per line
+    Returns list of dicts: {"url": ..., "section": "Категории", "subsection": <slug>}
+    """
+    entries = []
+    with open(path, newline="", encoding="utf-8-sig") as fh:
+        sample = fh.read(4096)
+        fh.seek(0)
+        is_csv = "," in sample or ";" in sample
+
+        if is_csv:
+            dialect = csv.Sniffer().sniff(sample, delimiters=",;\t")
+            reader = csv.DictReader(fh, dialect=dialect)
+            url_field = None
+            if reader.fieldnames:
+                for f in reader.fieldnames:
+                    if f and f.strip().lower() in ("url", "loc", "address", "link"):
+                        url_field = f
+                        break
+                if url_field is None:
+                    # Use first field
+                    url_field = reader.fieldnames[0]
+            for row in reader:
+                raw = (row.get(url_field) or "").strip()
+                if raw.startswith("http"):
+                    entries.append(raw)
+        else:
+            for line in fh:
+                raw = line.strip()
+                if raw.startswith("http"):
+                    entries.append(raw)
+
+    result = []
+    for url in entries:
+        slug = url.rstrip("/").split("/")[-1] or "category"
+        result.append({"url": url, "section": "Категории", "subsection": slug})
+    logger.info(f"Loaded {len(result)} category URLs from {path}")
+    return result
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="2407.pl fitment crawler (Dolphin Anty)")
     parser.add_argument("--no-sitemap", action="store_true")
@@ -49,6 +94,11 @@ def parse_args():
     parser.add_argument("--output-dir", default=OUTPUT_DIR)
     parser.add_argument("--csv", action="store_true")
     parser.add_argument("--log-level", default=LOG_LEVEL)
+    parser.add_argument(
+        "--categories-file", default=None,
+        help="Path to CSV/TXT with category URLs (skips seed-based discovery). "
+             "Auto-detected if config/sitemap-category-ru.csv exists.",
+    )
     return parser.parse_args()
 
 
@@ -154,17 +204,42 @@ def main():
 
     crawler = CategoryCrawler(renderer, base_url=BASE_URL)
 
+    # Resolve categories file: explicit arg > auto-detect config/sitemap-category-ru.csv
+    categories_file = args.categories_file
+    if not categories_file:
+        auto_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                 "config", "sitemap-category-ru.csv")
+        if os.path.exists(auto_path):
+            categories_file = auto_path
+            logger.info(f"Auto-detected categories file: {auto_path}")
+
     # Deduplicate within source_url
     seen_per_source = {}  # source_url -> set of product_ids
 
+    def _iter_products(seed_or_cat):
+        """Yield product_info dicts from either a seed or a direct category entry."""
+        if categories_file:
+            return crawler.crawl_category_direct(
+                seed_or_cat["url"],
+                seed_or_cat["section"],
+                seed_or_cat["subsection"],
+            )
+        return crawler.crawl_seed(seed_or_cat)
+
     products_count = 0
     try:
-        active_seeds = [s for s in SEED_URLS if not args.sections or s["section"] in args.sections]
-        for seed in active_seeds:
+        if categories_file:
+            active_items = load_categories_file(categories_file)
+            logger.info(f"Categories-file mode: {len(active_items)} categories")
+        else:
+            active_items = [s for s in SEED_URLS
+                            if not args.sections or s["section"] in args.sections]
+
+        for seed in active_items:
             logger.info(f"Processing: {seed['section']} — {seed['url']}")
             seed_count = 0
 
-            for product_info in crawler.crawl_seed(seed):
+            for product_info in _iter_products(seed):
                 src_url = product_info["source_url"]
                 prod_url = product_info["product_url"]
 

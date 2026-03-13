@@ -8,7 +8,9 @@ Usage:
 
 Options:
     --no-sitemap        Skip sitemap discovery
-    --limit N           Stop after N products (for testing)
+    --sections S [S ..] Only process listed sections (e.g. Фильтры Автосвет)
+    --limit N           Stop after N products total (for testing)
+    --limit-per-seed N  Stop after N products per seed URL (for testing)
     --output-dir DIR    Output directory (default: ./output)
     --csv               Also write CSV output
     --log-level LEVEL   DEBUG, INFO, WARNING (default: INFO)
@@ -39,6 +41,8 @@ logger = logging.getLogger(__name__)
 def parse_args():
     parser = argparse.ArgumentParser(description="2407.pl fitment crawler (Dolphin Anty)")
     parser.add_argument("--no-sitemap", action="store_true")
+    parser.add_argument("--sections", nargs="+", default=[],
+                        help="Разделы для парсинга, например: --sections Фильтры Автосвет")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--limit-per-seed", type=int, default=0,
                         help="Stop after N products per seed URL (for testing)")
@@ -108,6 +112,7 @@ def process_product(product_info: dict, renderer, metrics: Metrics) -> list:
             "part_number_normalized": product_data.part_number_normalized,
             "price_pln": product_data.price_pln,
             "vat_included": product_data.vat_included,
+            "characteristics": product_data.characteristics,
             "fitment_make": fitment.make,
             "fitment_model": fitment.model,
             "fitment_raw_line": fitment.raw_line,
@@ -154,7 +159,8 @@ def main():
 
     products_count = 0
     try:
-        for seed in SEED_URLS:
+        active_seeds = [s for s in SEED_URLS if not args.sections or s["section"] in args.sections]
+        for seed in active_seeds:
             logger.info(f"Processing: {seed['section']} — {seed['url']}")
             seed_count = 0
 

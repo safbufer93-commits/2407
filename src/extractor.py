@@ -39,6 +39,7 @@ class ProductData:
     price_pln: Optional[float]
     vat_included: bool
     breadcrumb_path: Optional[str]
+    characteristics: Optional[str] = None
     fitment_rows: List[FitmentRow] = field(default_factory=list)
     parse_errors: List[str] = field(default_factory=list)
 
@@ -248,6 +249,45 @@ def parse_fitment_block(text: str) -> List[FitmentRow]:
     return rows
 
 
+def extract_characteristics(soup: BeautifulSoup) -> Optional[str]:
+    """Extract product characteristics/specs as a semicolon-separated string."""
+    # Try common specs table patterns
+    for selector in [
+        "[class*='haracteristic']", "[class*='Characteristic']",
+        "[class*='pecification']", "[class*='Specification']",
+        "[class*='Params']", "[class*='params']",
+        "[class*='Attrs']", "[class*='attrs']",
+        "table.params", ".product-params",
+    ]:
+        container = soup.select_one(selector)
+        if container:
+            rows = container.find_all("tr")
+            if rows:
+                parts = []
+                for row in rows:
+                    cells = row.find_all(["td", "th"])
+                    if len(cells) >= 2:
+                        key = cells[0].get_text(strip=True)
+                        val = cells[1].get_text(strip=True)
+                        if key and val:
+                            parts.append(f"{key}: {val}")
+                if parts:
+                    return "; ".join(parts)
+            # No table rows — try key/value divs
+            keys = container.find_all(class_=re.compile(r"[Ll]abel|[Nn]ame|[Kk]ey"))
+            vals = container.find_all(class_=re.compile(r"[Vv]alue|[Dd]ata"))
+            if keys and vals:
+                parts = []
+                for k, v in zip(keys, vals):
+                    kk = k.get_text(strip=True)
+                    vv = v.get_text(strip=True)
+                    if kk and vv:
+                        parts.append(f"{kk}: {vv}")
+                if parts:
+                    return "; ".join(parts)
+    return None
+
+
 def extract_product(url: str, html: str) -> ProductData:
     """Extract all product data from HTML of a product page."""
     soup = BeautifulSoup(html, "lxml")
@@ -273,6 +313,9 @@ def extract_product(url: str, html: str) -> ProductData:
         if "PLN" not in text_space and "zł" not in text_space.lower():
             parse_errors.append("currency_not_pln")
             logger.warning(f"Non-PLN currency detected at {url}")
+
+    # Characteristics
+    characteristics = extract_characteristics(soup)
 
     # Fitment
     fitment_rows = parse_fitment_block(text)
@@ -300,6 +343,7 @@ def extract_product(url: str, html: str) -> ProductData:
         price_pln=price_pln,
         vat_included=vat_included,
         breadcrumb_path=breadcrumb,
+        characteristics=characteristics,
         fitment_rows=fitment_rows,
         parse_errors=parse_errors
     )

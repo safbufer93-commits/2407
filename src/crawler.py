@@ -61,13 +61,16 @@ def detect_page_type(soup: BeautifulSoup) -> str:
 
 
 def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
-                               seed_path: str) -> List[str]:
+                               seed_path: str,
+                               strict: bool = True) -> List[str]:
     """
-    Extract subcategory links that are children of seed_path.
-    e.g. seed_path=/ru/filtry/ → only /ru/filtry/masljannye-filtry/ etc.
+    Extract subcategory links found on a directory page.
+    strict=True: only links nested under seed_path (e.g. /ru/filtry/sub/)
+    strict=False: any /ru/category/ link on the page (flat URL structure support)
     """
     links = set()
     seed_path_norm = seed_path.rstrip("/") + "/"
+    seed_parts = [p for p in seed_path_norm.strip("/").split("/") if p]
 
     for a in soup.find_all("a", href=True):
         href = a["href"]
@@ -81,8 +84,8 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
         if not path.startswith("/ru/"):
             continue
 
-        # KEY FIX: only follow paths that start with the seed path
-        if not path.startswith(seed_path_norm):
+        # In strict mode, only follow paths nested under seed_path
+        if strict and not path.startswith(seed_path_norm):
             continue
 
         # Skip forbidden
@@ -95,9 +98,16 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
 
         path_parts = [p for p in path.strip("/").split("/") if p]
 
-        # Must be deeper than seed (at least one more level)
-        seed_parts = [p for p in seed_path_norm.strip("/").split("/") if p]
-        if len(path_parts) <= len(seed_parts):
+        # Must be at least /ru/something/ (depth >= 2)
+        if len(path_parts) < 2:
+            continue
+
+        # In strict mode must be deeper than seed; in flat mode must be >= seed depth
+        if strict and len(path_parts) <= len(seed_parts):
+            continue
+
+        # Skip the seed page itself
+        if path == seed_path_norm or path.rstrip("/") == seed_path_norm.rstrip("/"):
             continue
 
         # No numeric IDs = category page
@@ -270,9 +280,15 @@ class CategoryCrawler:
         if page_type == "listing":
             yield from self._crawl_listing(url, soup, section, subsection, source_url)
         else:
-            # directory or unknown: find subcategories WITHIN seed scope
-            subcat_links = extract_subcategory_links(soup, self.base_url, seed_path)
-            logger.info(f"Found {len(subcat_links)} subcats within {seed_path}")
+            # directory or unknown: find subcategories WITHIN seed scope (strict)
+            subcat_links = extract_subcategory_links(soup, self.base_url, seed_path, strict=True)
+            logger.info(f"Found {len(subcat_links)} nested subcats within {seed_path}")
+
+            if not subcat_links:
+                # Site uses flat URL structure: subcategories are siblings, not nested.
+                # Fall back to any /ru/category/ link found on this page.
+                subcat_links = extract_subcategory_links(soup, self.base_url, seed_path, strict=False)
+                logger.info(f"Flat fallback: {len(subcat_links)} subcats at {url}")
 
             if subcat_links:
                 for sub_url in subcat_links:

@@ -57,7 +57,7 @@ def detect_page_type(soup: BeautifulSoup) -> str:
     if any(any(pat in c for pat in LISTING_CSS) for c in all_classes):
         return "listing"
 
-    product_links = extract_product_links(soup, "https://2407.pl")
+    product_links = extract_product_links(soup, "https://2407.pl")  # no category_url, type detection only
     if len(product_links) > 2:
         return "listing"
 
@@ -158,11 +158,12 @@ def _is_car_filter_url(path: str) -> bool:
     return bool(BRAND_PATH_RE.search(path) or CAR_FILTER_RE.search(path))
 
 
-def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
+def extract_product_links(soup: BeautifulSoup, base_url: str,
+                          category_url: str = None) -> List[str]:
     links = []
     seen = set()
 
-    # Try product CSS classes first
+    # Try product CSS classes first — accept any depth >= 3 (/ru/cat/product/)
     for css_pat in PRODUCT_CSS:
         for el in soup.find_all(class_=re.compile(css_pat)):
             a = el if el.name == "a" else el.find("a", href=True)
@@ -170,17 +171,52 @@ def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
                 href = a["href"]
                 full_url = urljoin(base_url, href)
                 parsed = urlparse(full_url)
+                if parsed.netloc not in (BASE_DOMAIN, "www." + BASE_DOMAIN):
+                    continue
                 path = parsed.path
                 if _is_car_filter_url(path):
                     continue
+                if is_forbidden_url(full_url):
+                    continue
                 path_parts = [p for p in path.strip("/").split("/") if p]
-                if any(p.isdigit() and len(p) > 3 for p in path_parts):
-                    clean = normalize_url(full_url)
-                    if clean not in seen:
-                        seen.add(clean)
-                        links.append(full_url)
+                # Product pages are at least /ru/category/product/ (depth 3+)
+                if len(path_parts) < 3:
+                    continue
+                clean = normalize_url(full_url)
+                if clean not in seen:
+                    seen.add(clean)
+                    links.append(full_url)
 
-    # Fallback: any /ru/ link with numeric ID
+    # Depth-based fallback: find links exactly one level deeper than the category page.
+    # This handles sites where product URLs are slug-based without numeric IDs,
+    # e.g. /ru/barabany.../bosch-0986477133/ vs /ru/barabany.../
+    if not links and category_url:
+        cat_path = urlparse(category_url).path.rstrip("/") + "/"
+        cat_parts = [p for p in cat_path.strip("/").split("/") if p]
+        expected_depth = len(cat_parts) + 1
+
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            full_url = urljoin(base_url, href)
+            parsed = urlparse(full_url)
+            if parsed.netloc not in (BASE_DOMAIN, "www." + BASE_DOMAIN):
+                continue
+            path = parsed.path
+            if not path.startswith(cat_path):
+                continue
+            if _is_car_filter_url(path):
+                continue
+            if is_forbidden_url(full_url):
+                continue
+            path_parts = [p for p in path.strip("/").split("/") if p]
+            if len(path_parts) != expected_depth:
+                continue
+            clean = normalize_url(full_url)
+            if clean not in seen:
+                seen.add(clean)
+                links.append(full_url)
+
+    # Numeric ID fallback (original approach for other site structures)
     if not links:
         for a in soup.find_all("a", href=True):
             href = a["href"]
@@ -337,7 +373,7 @@ class CategoryCrawler:
                                                 depth=depth + 1)
             else:
                 # No subcats found — treat as listing
-                product_links = extract_product_links(soup, self.base_url)
+                product_links = extract_product_links(soup, self.base_url, url)
                 if product_links:
                     logger.info(f"No subcats, treating as listing: {url}")
                     yield from self._crawl_listing(url, soup, section, subsection, source_url)
@@ -351,6 +387,9 @@ class CategoryCrawler:
         if norm in self.visited_listings:
             return
         self.visited_listings.add(norm)
+
+        # Save original category path for product link depth detection
+        cat_url = listing_url
 
         max_url = build_per_page_url(listing_url, 50)
         if max_url != listing_url:
@@ -373,7 +412,7 @@ class CategoryCrawler:
                     continue
                 soup = BeautifulSoup(html, "lxml")
 
-            product_links = extract_product_links(soup, self.base_url)
+            product_links = extract_product_links(soup, self.base_url, cat_url)
             logger.info(f"Page {page_idx}: {len(product_links)} products at {page_url}")
 
             for product_url in product_links:
@@ -418,7 +457,7 @@ class CategoryCrawler:
             yield from self._crawl_listing(url, soup, section, subsection, url)
         else:
             # Try as listing first (products may still be present)
-            product_links = extract_product_links(soup, self.base_url)
+            product_links = extract_product_links(soup, self.base_url, url)
             if product_links:
                 yield from self._crawl_listing(url, soup, section, subsection, url)
             else:

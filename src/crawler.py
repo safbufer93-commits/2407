@@ -431,6 +431,20 @@ class CategoryCrawler:
             product_links = extract_product_links(soup, self.base_url, cat_url)
             logger.info(f"Page {page_idx}: {len(product_links)} products at {page_url}")
 
+            # Debug: dump HTML and all /ru/ links when no products found on page 1
+            if page_idx == 1 and not product_links:
+                import os as _os
+                debug_path = _os.path.join(_os.getcwd(), "debug_page.html")
+                try:
+                    with open(debug_path, "w", encoding="utf-8") as _f:
+                        _f.write(str(soup))
+                    logger.warning(f"[DEBUG] 0 products — HTML saved to {debug_path}")
+                except Exception as _e:
+                    logger.warning(f"[DEBUG] Could not save HTML: {_e}")
+                ru_links = [a["href"] for a in soup.find_all("a", href=True)
+                            if "/ru/" in a.get("href", "")][:30]
+                logger.warning(f"[DEBUG] Sample /ru/ links on page: {ru_links}")
+
             for product_url in product_links:
                 yield {
                     "product_url": product_url,

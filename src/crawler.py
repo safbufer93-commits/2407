@@ -179,6 +179,10 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
                 if is_forbidden_url(full_url):
                     continue
                 path_parts = [p for p in path.strip("/").split("/") if p]
+                # Skip trademark/brand filter pages — they are listings, not products
+                if any(p.startswith("trademark=") or p.startswith("brand=")
+                       for p in path_parts):
+                    continue
                 # Product pages are at least /ru/category/product/ (depth 3+)
                 if len(path_parts) < 3:
                     continue
@@ -217,6 +221,10 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
             if is_forbidden_url(full_url):
                 continue
             path_parts = [p for p in path.strip("/").split("/") if p]
+            # Skip trademark/brand filter pages — they are listings, not products
+            if any(p.startswith("trademark=") or p.startswith("brand=")
+                   for p in path_parts):
+                continue
             if len(path_parts) != expected_depth:
                 continue
             clean = normalize_url(full_url)

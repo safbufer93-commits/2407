@@ -12,7 +12,11 @@ from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
-FORBIDDEN_PREFIXES = ["/api/v1/", "/search/", "/pages/", "/blog/"]
+FORBIDDEN_PREFIXES = ["/api/v1/", "/search/", "/pages/", "/blog/",
+                      "/ru/pages/", "/ru/blog/", "/ru/catalogue/"]
+
+# Patterns in path that indicate car-brand / make filter pages (not product categories)
+BRAND_PATH_RE = re.compile(r"/([\w-]+-cars|[\w-]+-brand|[\w-]+-auto)/?$", re.I)
 BASE_DOMAIN = "2407.pl"
 
 DIRECTORY_MARKERS = ["Все категории", "Показать все категории"]
@@ -60,18 +64,18 @@ def detect_page_type(soup: BeautifulSoup) -> str:
     return "directory"
 
 
-NAV_PARENT_TAGS = {"nav", "header", "footer"}
-NAV_CLASS_PATTERNS = re.compile(r"\b(nav|header|footer|menu|sidebar|topbar|breadcrumb)\b", re.I)
-
-
-def _is_nav_link(tag) -> bool:
-    """Return True if the <a> tag lives inside a nav/header/footer element."""
-    for parent in tag.parents:
-        if parent.name in NAV_PARENT_TAGS:
-            return True
-        classes = " ".join(parent.get("class", []))
-        if NAV_CLASS_PATTERNS.search(classes):
-            return True
+def _has_tile_image(a_tag) -> bool:
+    """Return True if <a> is a category tile (has an <img> in self, parent, or grandparent).
+    Category tiles always have a product/category image; plain nav links do not.
+    """
+    if a_tag.find("img"):
+        return True
+    parent = a_tag.parent
+    if parent and parent.find("img"):
+        return True
+    gp = parent.parent if parent else None
+    if gp and gp.find("img"):
+        return True
     return False
 
 
@@ -88,9 +92,10 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
     seed_parts = [p for p in seed_path_norm.strip("/").split("/") if p]
 
     for a in soup.find_all("a", href=True):
-        # In flat mode skip navigation/header/footer links
-        if not strict and _is_nav_link(a):
+        # In flat mode only follow tile-style links (those with a nearby image)
+        if not strict and not _has_tile_image(a):
             continue
+
         href = a["href"]
         full_url = urljoin(base_url, href)
         parsed = urlparse(full_url)
@@ -106,8 +111,12 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
         if strict and not path.startswith(seed_path_norm):
             continue
 
-        # Skip forbidden
+        # Skip forbidden (includes /ru/pages/, /ru/blog/, /ru/catalogue/)
         if is_forbidden_url(full_url):
+            continue
+
+        # Skip car-brand / make filter pages
+        if BRAND_PATH_RE.search(path):
             continue
 
         # Skip files

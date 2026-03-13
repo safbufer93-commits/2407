@@ -150,6 +150,14 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
     return list(links)
 
 
+CAR_FILTER_RE = re.compile(r"/([\w-]+-cars|[\w-]+-brand|[\w-]+-auto)/", re.I)
+
+
+def _is_car_filter_url(path: str) -> bool:
+    """Return True if path contains a car-make/brand filter segment anywhere."""
+    return bool(BRAND_PATH_RE.search(path) or CAR_FILTER_RE.search(path))
+
+
 def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
     links = []
     seen = set()
@@ -163,6 +171,8 @@ def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
                 full_url = urljoin(base_url, href)
                 parsed = urlparse(full_url)
                 path = parsed.path
+                if _is_car_filter_url(path):
+                    continue
                 path_parts = [p for p in path.strip("/").split("/") if p]
                 if any(p.isdigit() and len(p) > 3 for p in path_parts):
                     clean = normalize_url(full_url)
@@ -180,6 +190,8 @@ def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
                 continue
             path = parsed.path
             if not path.startswith("/ru/"):
+                continue
+            if _is_car_filter_url(path):
                 continue
             path_parts = [p for p in path.strip("/").split("/") if p]
             if not any(p.isdigit() and len(p) > 3 for p in path_parts):

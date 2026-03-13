@@ -192,6 +192,14 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
     # e.g. /ru/barabany.../bosch-0986477133/ vs /ru/barabany.../
     if not links and category_url:
         cat_path = urlparse(category_url).path.rstrip("/") + "/"
+        # Strip trademark/brand filter segments (e.g. trademark=ashika) so that
+        # product URLs like /ru/category/product/ are correctly matched against
+        # the real parent category path /ru/category/ instead of /ru/category/trademark=ashika/
+        raw_parts = [p for p in cat_path.strip("/").split("/") if p]
+        clean_parts = [p for p in raw_parts
+                       if not p.startswith("trademark=") and not p.startswith("brand=")]
+        if clean_parts != raw_parts:
+            cat_path = "/" + "/".join(clean_parts) + "/"
         cat_parts = [p for p in cat_path.strip("/").split("/") if p]
         expected_depth = len(cat_parts) + 1
 

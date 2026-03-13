@@ -60,19 +60,37 @@ def detect_page_type(soup: BeautifulSoup) -> str:
     return "directory"
 
 
+NAV_PARENT_TAGS = {"nav", "header", "footer"}
+NAV_CLASS_PATTERNS = re.compile(r"\b(nav|header|footer|menu|sidebar|topbar|breadcrumb)\b", re.I)
+
+
+def _is_nav_link(tag) -> bool:
+    """Return True if the <a> tag lives inside a nav/header/footer element."""
+    for parent in tag.parents:
+        if parent.name in NAV_PARENT_TAGS:
+            return True
+        classes = " ".join(parent.get("class", []))
+        if NAV_CLASS_PATTERNS.search(classes):
+            return True
+    return False
+
+
 def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
                                seed_path: str,
                                strict: bool = True) -> List[str]:
     """
     Extract subcategory links found on a directory page.
     strict=True: only links nested under seed_path (e.g. /ru/filtry/sub/)
-    strict=False: any /ru/category/ link on the page (flat URL structure support)
+    strict=False: content-area /ru/category/ links only (excludes nav/header/footer)
     """
     links = set()
     seed_path_norm = seed_path.rstrip("/") + "/"
     seed_parts = [p for p in seed_path_norm.strip("/").split("/") if p]
 
     for a in soup.find_all("a", href=True):
+        # In flat mode skip navigation/header/footer links
+        if not strict and _is_nav_link(a):
+            continue
         href = a["href"]
         full_url = urljoin(base_url, href)
         parsed = urlparse(full_url)

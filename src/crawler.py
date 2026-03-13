@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 FORBIDDEN_PREFIXES = ["/api/v1/", "/search/", "/pages/", "/blog/"]
 BASE_DOMAIN = "2407.pl"
 
+SLUG_WITH_ID_RE = re.compile(r"-(\d{5,})$")
+
 DIRECTORY_MARKERS = ["Все категории", "Показать все категории"]
 LISTING_MARKERS = ["Результаты:", "Показать элементы", "Показать еще", "Сортировать по"]
 LISTING_CSS = ["CatalogueListItem", "ListItemstyle", "SparePartsItem", "SparePartsList"]
@@ -60,6 +62,17 @@ def detect_page_type(soup: BeautifulSoup) -> str:
     return "directory"
 
 
+def has_product_id(path_parts: list) -> bool:
+    """Check if path parts contain a product ID — either a pure numeric segment
+    or a slug ending with a long number like 'amortyzator-sc2962-12946833'."""
+    for p in path_parts:
+        if p.isdigit() and len(p) > 3:
+            return True
+        if SLUG_WITH_ID_RE.search(p):
+            return True
+    return False
+
+
 def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
                                seed_path: str) -> List[str]:
     """
@@ -100,8 +113,8 @@ def extract_subcategory_links(soup: BeautifulSoup, base_url: str,
         if len(path_parts) <= len(seed_parts):
             continue
 
-        # No numeric IDs = category page
-        if any(p.isdigit() and len(p) > 4 for p in path_parts):
+        # No product IDs = category page (skip pure-digit IDs and slug-IDs)
+        if has_product_id(path_parts):
             continue
 
         # Skip trademark/brand filter URLs
@@ -127,7 +140,7 @@ def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
                 parsed = urlparse(full_url)
                 path = parsed.path
                 path_parts = [p for p in path.strip("/").split("/") if p]
-                if any(p.isdigit() and len(p) > 3 for p in path_parts):
+                if has_product_id(path_parts):
                     clean = normalize_url(full_url)
                     if clean not in seen:
                         seen.add(clean)
@@ -145,7 +158,7 @@ def extract_product_links(soup: BeautifulSoup, base_url: str) -> List[str]:
             if not path.startswith("/ru/"):
                 continue
             path_parts = [p for p in path.strip("/").split("/") if p]
-            if not any(p.isdigit() and len(p) > 3 for p in path_parts):
+            if not has_product_id(path_parts):
                 continue
             if is_forbidden_url(full_url):
                 continue

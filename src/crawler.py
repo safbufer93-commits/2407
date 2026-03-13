@@ -220,7 +220,10 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
             # and accept any depth-3 link on the same site instead.
             if not was_trademark_page and not path.startswith(cat_path):
                 continue
-            if _is_car_filter_url(path):
+            # On trademark pages the products may live under /ru/brand-name/slug/
+            # which legitimately contains "-brand" — skip the car-filter check for
+            # depth-3 paths that are being collected as products.
+            if not was_trademark_page and _is_car_filter_url(path):
                 continue
             if is_forbidden_url(full_url):
                 continue

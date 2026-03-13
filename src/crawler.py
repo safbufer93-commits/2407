@@ -202,7 +202,8 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
         raw_parts = [p for p in cat_path.strip("/").split("/") if p]
         clean_parts = [p for p in raw_parts
                        if not p.startswith("trademark=") and not p.startswith("brand=")]
-        if clean_parts != raw_parts:
+        was_trademark_page = clean_parts != raw_parts
+        if was_trademark_page:
             cat_path = "/" + "/".join(clean_parts) + "/"
         cat_parts = [p for p in cat_path.strip("/").split("/") if p]
         expected_depth = len(cat_parts) + 1
@@ -214,7 +215,10 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
             if parsed.netloc not in (BASE_DOMAIN, "www." + BASE_DOMAIN):
                 continue
             path = parsed.path
-            if not path.startswith(cat_path):
+            # For trademark/brand pages products may reside under a different
+            # sub-path (e.g. /ru/ashika-brand/…) — drop the startswith check
+            # and accept any depth-3 link on the same site instead.
+            if not was_trademark_page and not path.startswith(cat_path):
                 continue
             if _is_car_filter_url(path):
                 continue
@@ -225,8 +229,13 @@ def extract_product_links(soup: BeautifulSoup, base_url: str,
             if any(p.startswith("trademark=") or p.startswith("brand=")
                    for p in path_parts):
                 continue
-            if len(path_parts) != expected_depth:
-                continue
+            if was_trademark_page:
+                # Accept links at depth 3 (/ru/X/Y/) only
+                if len(path_parts) != 3:
+                    continue
+            else:
+                if len(path_parts) != expected_depth:
+                    continue
             clean = normalize_url(full_url)
             if clean not in seen:
                 seen.add(clean)

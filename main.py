@@ -40,6 +40,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="2407.pl fitment crawler (Dolphin Anty)")
     parser.add_argument("--no-sitemap", action="store_true")
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--limit-per-seed", type=int, default=0,
+                        help="Stop after N products per seed URL (for testing)")
     parser.add_argument("--output-dir", default=OUTPUT_DIR)
     parser.add_argument("--csv", action="store_true")
     parser.add_argument("--log-level", default=LOG_LEVEL)
@@ -154,6 +156,7 @@ def main():
     try:
         for seed in SEED_URLS:
             logger.info(f"Processing: {seed['section']} — {seed['url']}")
+            seed_count = 0
 
             for product_info in crawler.crawl_seed(seed):
                 src_url = product_info["source_url"]
@@ -173,6 +176,11 @@ def main():
                         csv_writer.write_row(row)
 
                 products_count += 1
+                seed_count += 1
+
+                if args.limit_per_seed and seed_count >= args.limit_per_seed:
+                    logger.info(f"Reached per-seed limit ({args.limit_per_seed}) for: {seed['url']}")
+                    break
 
                 if args.limit and products_count >= args.limit:
                     logger.info(f"Reached limit: {args.limit}")

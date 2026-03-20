@@ -81,6 +81,56 @@ class DolphinRenderer:
         self._page = None
         self._pw = None
 
+    def _is_cloudflare_challenge(self) -> bool:
+        """Check if current page shows a Cloudflare challenge."""
+        title = self._page.title().lower()
+        cf_titles = ["even geduld", "момент", "moment", "checking", "just a moment",
+                     "attention required", "beveiliging wordt geverifieerd"]
+        if any(t in title for t in cf_titles):
+            return True
+        # Check for CF challenge iframe
+        for frame in self._page.frames:
+            if "challenges.cloudflare.com" in frame.url:
+                return True
+        return False
+
+    def _handle_cloudflare_challenge(self) -> bool:
+        """Click Cloudflare Turnstile checkbox if present. Returns True if clicked."""
+        try:
+            # Find the Cloudflare challenge iframe
+            cf_frame = None
+            for frame in self._page.frames:
+                if "challenges.cloudflare.com" in frame.url:
+                    cf_frame = frame
+                    break
+
+            if cf_frame is None:
+                return False
+
+            logger.info("Cloudflare Turnstile detected, attempting to click checkbox...")
+
+            # Try clicking the checkbox inside the CF iframe
+            for selector in [
+                'input[type="checkbox"]',
+                'label[for="cf-stage"]',
+                ".ctp-checkbox-label",
+                "#challenge-stage",
+                "body",
+            ]:
+                try:
+                    locator = cf_frame.locator(selector)
+                    if locator.count() > 0:
+                        locator.first.click(timeout=5000)
+                        logger.info(f"Clicked CF element: {selector}")
+                        time.sleep(4)
+                        return True
+                except Exception:
+                    continue
+
+        except Exception as e:
+            logger.debug(f"CF challenge handler error: {e}")
+        return False
+
     def fetch_html(self, url: str) -> Optional[str]:
         if self._page is None:
             self._connect()
@@ -90,14 +140,13 @@ class DolphinRenderer:
                 time.sleep(random.uniform(self.delay_min, self.delay_max))
                 self._page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-                # Wait for Cloudflare if needed
-                for _ in range(15):
-                    title = self._page.title()
-                    if ("момент" not in title.lower() and
-                            "moment" not in title.lower() and
-                            "checking" not in title.lower()):
+                # Wait for Cloudflare challenge and handle it
+                for _ in range(20):
+                    if not self._is_cloudflare_challenge():
                         break
+                    title = self._page.title()
                     logger.debug(f"Waiting for Cloudflare: {title}")
+                    self._handle_cloudflare_challenge()
                     time.sleep(2)
 
                 time.sleep(1.5)

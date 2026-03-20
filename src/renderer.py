@@ -105,37 +105,56 @@ class DolphinRenderer:
         return False
 
     def _handle_cloudflare_challenge(self) -> bool:
-        """Click Cloudflare Turnstile checkbox if present. Returns True if clicked."""
+        """Click Cloudflare Turnstile checkbox. Returns True if click was attempted."""
         try:
-            # Find the Cloudflare challenge iframe
+            # Method 1: click the CF iframe element directly via mouse coordinates
+            # This is the most reliable way - bypasses all shadow DOM complexity
+            for iframe_sel in [
+                "iframe[src*='challenges.cloudflare.com']",
+                "iframe[src*='challenge-platform']",
+                "iframe[title*='cloudflare' i]",
+                "iframe[title*='challenge' i]",
+            ]:
+                try:
+                    iframe_el = self._page.locator(iframe_sel).first
+                    if iframe_el.count() > 0:
+                        box = iframe_el.bounding_box()
+                        if box and box["width"] > 0 and box["height"] > 0:
+                            # Click center of the CF widget (where the checkbox is)
+                            cx = box["x"] + box["width"] / 2
+                            cy = box["y"] + box["height"] / 2
+                            self._page.mouse.click(cx, cy)
+                            logger.info(f"Clicked CF iframe via mouse at ({cx:.0f}, {cy:.0f})")
+                            time.sleep(5)
+                            return True
+                except Exception:
+                    continue
+
+            # Method 2: click inside the CF frame using frame locator
             cf_frame = None
             for frame in self._page.frames:
                 if "challenges.cloudflare.com" in frame.url:
                     cf_frame = frame
                     break
 
-            if cf_frame is None:
-                return False
-
-            logger.info("Cloudflare Turnstile detected, attempting to click checkbox...")
-
-            # Try clicking the checkbox inside the CF iframe
-            for selector in [
-                'input[type="checkbox"]',
-                'label[for="cf-stage"]',
-                ".ctp-checkbox-label",
-                "#challenge-stage",
-                "body",
-            ]:
-                try:
-                    locator = cf_frame.locator(selector)
-                    if locator.count() > 0:
-                        locator.first.click(timeout=5000)
-                        logger.info(f"Clicked CF element: {selector}")
-                        time.sleep(4)
-                        return True
-                except Exception:
-                    continue
+            if cf_frame:
+                logger.info("CF frame found, attempting selector click...")
+                for selector in [
+                    'input[type="checkbox"]',
+                    ".ctp-checkbox-label",
+                    'label[for="cf-stage"]',
+                    "#cf-stage",
+                    "body",
+                ]:
+                    try:
+                        loc = cf_frame.locator(selector)
+                        if loc.count() > 0:
+                            loc.first.click(timeout=5000, force=True)
+                            logger.info(f"Clicked CF element: {selector}")
+                            time.sleep(5)
+                            return True
+                    except Exception:
+                        continue
 
         except Exception as e:
             logger.debug(f"CF challenge handler error: {e}")
@@ -151,15 +170,33 @@ class DolphinRenderer:
                 self._page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
                 # Wait for Cloudflare challenge and handle it
-                for _ in range(20):
+                # Try clicking once every 3 seconds, up to 90s total
+                cf_click_attempted = False
+                for tick in range(30):  # 30 * 3s = 90s max
                     if not self._is_cloudflare_challenge():
                         break
-                    title = self._page.title()
-                    logger.debug(f"Waiting for Cloudflare: {title}")
-                    self._handle_cloudflare_challenge()
-                    time.sleep(2)
+                    # Try to click on tick 0, 5, 10 (every 15s after first)
+                    if tick == 0 or tick % 5 == 0:
+                        clicked = self._handle_cloudflare_challenge()
+                        if clicked and not cf_click_attempted:
+                            cf_click_attempted = True
+                            logger.info("CF click attempted, waiting for challenge to resolve...")
+                    else:
+                        logger.debug(f"Waiting for CF to clear (tick {tick}/30)...")
+                    time.sleep(3)
+                else:
+                    # Loop exhausted - CF did not clear in 90s
+                    logger.warning(
+                        f"Cloudflare challenge was not cleared within 90s for {url}. "
+                        "Please click the checkbox manually in the Dolphin browser window."
+                    )
+                    # Extra 60s grace period for manual solve
+                    for _ in range(20):
+                        if not self._is_cloudflare_challenge():
+                            break
+                        time.sleep(3)
 
-                time.sleep(1.5)
+                time.sleep(2)
                 html = self._page.content()
                 if html and len(html) > 1000:
                     return html
@@ -167,10 +204,10 @@ class DolphinRenderer:
                 time.sleep(3)
 
             except Exception as e:
-                logger.warning(f"Dolphin fetch error ({attempt+1}): {e} for {url}")
+                logger.warning(f"Dolphin fetch error ({attempt + 1}): {e} for {url}")
                 time.sleep(3 * (attempt + 1))
                 if attempt >= 1:
-                    # Try reconnecting: stop profile first to avoid E_BROWSER_RUN_DUPLICATE
+                    # Reconnect to avoid E_BROWSER_RUN_DUPLICATE
                     try:
                         self._disconnect()
                         self._stop_profile()

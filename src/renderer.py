@@ -92,6 +92,16 @@ class DolphinRenderer:
         for frame in self._page.frames:
             if "challenges.cloudflare.com" in frame.url:
                 return True
+        # Check page content for CF markers (silent block without iframe)
+        try:
+            body = self._page.inner_text("body")
+            cf_body = ["verifieer dat je mens bent", "verify you are human",
+                       "подтвердите, что вы человек", "cf-browser-verification",
+                       "ray id", "checking your browser"]
+            if any(m in body.lower() for m in cf_body):
+                return True
+        except Exception:
+            pass
         return False
 
     def _handle_cloudflare_challenge(self) -> bool:
@@ -153,16 +163,18 @@ class DolphinRenderer:
                 html = self._page.content()
                 if html and len(html) > 1000:
                     return html
-                logger.warning(f"Short response ({len(html) if html else 0}) for {url}")
-                return html
+                logger.warning(f"Short response ({len(html) if html else 0}) for {url}, retrying...")
+                time.sleep(3)
 
             except Exception as e:
                 logger.warning(f"Dolphin fetch error ({attempt+1}): {e} for {url}")
                 time.sleep(3 * (attempt + 1))
                 if attempt >= 1:
-                    # Try reconnecting
+                    # Try reconnecting: stop profile first to avoid E_BROWSER_RUN_DUPLICATE
                     try:
                         self._disconnect()
+                        self._stop_profile()
+                        time.sleep(2)
                         self._connect()
                     except Exception as e2:
                         logger.error(f"Reconnect failed: {e2}")

@@ -26,7 +26,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config.settings import (
     SEED_URLS, BASE_URL, SITEMAP_URL, OUTPUT_DIR, OUTPUT_BASE_NAME,
     ROW_LIMIT, LOG_DIR, LOG_LEVEL,
-    DOLPHIN_PROFILE_ID, REQUEST_DELAY_MIN, REQUEST_DELAY_MAX
+    DOLPHIN_PROFILE_ID, REQUEST_DELAY_MIN, REQUEST_DELAY_MAX,
+    load_seeds_from_csv,
 )
 from src.logger import setup_logging, Metrics
 from src.crawler import CategoryCrawler, SitemapParser
@@ -121,6 +122,14 @@ def main():
     args = parse_args()
     setup_logging(LOG_DIR, args.log_level)
     logger.info("2407.pl fitment crawler starting (Dolphin Anty mode)")
+
+    # Log seed source
+    import os as _os
+    _csv = _os.path.join(_os.path.dirname(__file__), "config", "sitemap-category-ru.csv")
+    if _os.path.exists(_csv):
+        logger.info(f"Seeds loaded from CSV: {_csv} ({len(SEED_URLS)} URLs)")
+    else:
+        logger.info(f"Seeds from settings.py ({len(SEED_URLS)} URLs)")
 
     renderer = build_renderer()
 

@@ -2,7 +2,9 @@
 Configuration for 2407.pl fitment crawler.
 All scalar values can be overridden via environment variables.
 """
+import csv
 import os
+from urllib.parse import urlparse
 
 SEED_URLS = [
     # Автозапчасти
@@ -64,3 +66,66 @@ FORBIDDEN_PREFIXES = ["/api/v1/", "/search/"]
 ITEMS_PER_PAGE = 50
 # Dolphin Anty
 DOLPHIN_PROFILE_ID = os.environ.get('DOLPHIN_PROFILE_ID', '759890630')
+
+
+def load_seeds_from_csv(csv_path: str) -> list:
+    """
+    Load seed URLs from sitemap-category-ru.csv.
+    Detects URL column automatically (loc, url, URL, link, href).
+    Derives section name from the URL path.
+    """
+    seeds = []
+    url_columns = ["loc", "url", "URL", "link", "href", "address"]
+
+    try:
+        with open(csv_path, newline="", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            headers = reader.fieldnames or []
+
+            # Find URL column
+            url_col = None
+            for candidate in url_columns:
+                if candidate in headers:
+                    url_col = candidate
+                    break
+            if url_col is None and headers:
+                # Fallback: first column
+                url_col = headers[0]
+
+            # Find section column if present
+            section_col = None
+            for candidate in ["section", "category", "name", "title"]:
+                if candidate in headers:
+                    section_col = candidate
+                    break
+
+            for row in reader:
+                url = row.get(url_col, "").strip()
+                if not url or not url.startswith("http"):
+                    continue
+
+                # Derive section from URL path if no column
+                if section_col and row.get(section_col, "").strip():
+                    section = row[section_col].strip()
+                else:
+                    parts = [p for p in urlparse(url).path.strip("/").split("/") if p]
+                    # Skip language prefix like "ru"
+                    meaningful = [p for p in parts if p not in ("ru", "pl", "en")]
+                    section = meaningful[0].replace("-", " ").title() if meaningful else "Общее"
+
+                seeds.append({"section": section, "url": url})
+
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"CSV load error: {e}")
+
+    return seeds
+
+
+# Auto-load from sitemap CSV if present
+_csv_path = os.path.join(os.path.dirname(__file__), "sitemap-category-ru.csv")
+_csv_seeds = load_seeds_from_csv(_csv_path)
+if _csv_seeds:
+    SEED_URLS = _csv_seeds

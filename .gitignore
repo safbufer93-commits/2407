@@ -12,3 +12,12 @@ venv/
 output/
 logs/
 *.log
+debug_page.html
+output_part*/
+python.exe
+python.bak
+python.exe.broken
+python.bak.broken
+bool
+str
+Optional[str]

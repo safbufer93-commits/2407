@@ -7,7 +7,20 @@ from typing import Optional, List, Any
 
 logger = logging.getLogger(__name__)
 
-COLUMNS = [
+MAX_ORIGINAL_PAIRS = int(os.environ.get("MAX_ORIGINAL_PAIRS", "6"))
+MAX_ANALOG_PAIRS = int(os.environ.get("MAX_ANALOG_PAIRS", "12"))
+
+
+def _pair_columns(prefix: str, pair_count: int) -> list:
+    cols = []
+    for idx in range(1, pair_count + 1):
+        suffix = "" if idx == 1 else str(idx)
+        cols.append(f"{prefix}_brand{suffix}")
+        cols.append(f"{prefix}_number{suffix}")
+    return cols
+
+
+BASE_COLUMNS = [
     "source_section",
     "source_subsection",
     "source_url",
@@ -20,10 +33,19 @@ COLUMNS = [
     "part_number_normalized",
     "price_pln",
     "vat_included",
+    "characteristics",
     "fitment_make",
     "fitment_model",
+    "fitment_model_type",
+    "fitment_modification",
     "fitment_raw_line",
 ]
+
+COLUMNS = (
+    BASE_COLUMNS
+    + _pair_columns("original", MAX_ORIGINAL_PAIRS)
+    + _pair_columns("analog", MAX_ANALOG_PAIRS)
+)
 
 SHEET_NAME = "Fitment"
 
@@ -80,8 +102,21 @@ class RotatingXlsxWriter:
             "breadcrumb_path": 40, "product_url": 50, "product_id": 12,
             "name": 40, "brand": 20, "part_number_display": 20,
             "part_number_normalized": 20, "price_pln": 12, "vat_included": 12,
-            "fitment_make": 20, "fitment_model": 25, "fitment_raw_line": 50,
+            "characteristics": 90,
+            "fitment_make": 20,
+            "fitment_model": 25,
+            "fitment_model_type": 25,
+            "fitment_modification": 35,
+            "fitment_raw_line": 50,
         }
+        for idx in range(1, MAX_ORIGINAL_PAIRS + 1):
+            suffix = "" if idx == 1 else str(idx)
+            col_widths[f"original_brand{suffix}"] = 20
+            col_widths[f"original_number{suffix}"] = 24
+        for idx in range(1, MAX_ANALOG_PAIRS + 1):
+            suffix = "" if idx == 1 else str(idx)
+            col_widths[f"analog_brand{suffix}"] = 20
+            col_widths[f"analog_number{suffix}"] = 24
         for col_idx, col_name in enumerate(COLUMNS, 1):
             self._worksheet.column_dimensions[get_column_letter(col_idx)].width = \
                 col_widths.get(col_name, 20)
@@ -129,12 +164,15 @@ class RotatingXlsxWriter:
             "part_number_normalized": product_data.part_number_normalized,
             "price_pln": product_data.price_pln,
             "vat_included": product_data.vat_included,
+            "characteristics": getattr(product_data, "characteristics", None),
         }
 
         for fitment in product_data.fitment_rows:
             row = dict(base_row)
             row["fitment_make"] = fitment.make
             row["fitment_model"] = fitment.model
+            row["fitment_model_type"] = getattr(fitment, "model_type", None)
+            row["fitment_modification"] = getattr(fitment, "modification", None)
             row["fitment_raw_line"] = fitment.raw_line
             self.write_row(row)
 

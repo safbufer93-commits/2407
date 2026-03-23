@@ -15,6 +15,26 @@ logger = logging.getLogger(__name__)
 DOLPHIN_API_URL = "http://localhost:3001/v1.0"
 DOLPHIN_PROFILE_ID = os.environ.get("DOLPHIN_PROFILE_ID", "759890630")
 
+# Markers in page title that indicate Cloudflare challenge
+CLOUDFLARE_TITLE_MARKERS = [
+    "момент", "moment", "checking", "just a moment",
+    "attention required", "cloudflare", "403 forbidden",
+    "access denied", "ddos", "verify you are human",
+]
+
+# Markers in HTML body that indicate Cloudflare interstitial/error page
+CLOUDFLARE_BODY_MARKERS = [
+    "challenge-error-text",
+    "cf-error-details",
+    "cf_chl_prog",
+    "__cf_chl_",
+    "Cloudflare Ray ID",
+    "DDoS protection by Cloudflare",
+    "cf-spinner",
+    "jschl-answer",
+    "challenge-form",
+]
+
 
 class DolphinRenderer:
     """Renders pages using Dolphin Anty antidect browser."""
@@ -81,6 +101,18 @@ class DolphinRenderer:
         self._page = None
         self._pw = None
 
+    def _detect_cloudflare(self, html: str, title: str) -> Optional[str]:
+        """Return the detected marker string if the page is a Cloudflare
+        interstitial/error, or None if the page looks real."""
+        title_lower = title.lower()
+        for marker in CLOUDFLARE_TITLE_MARKERS:
+            if marker in title_lower:
+                return f"title:{marker}"
+        for marker in CLOUDFLARE_BODY_MARKERS:
+            if marker in html:
+                return marker
+        return None
+
     def fetch_html(self, url: str) -> Optional[str]:
         if self._page is None:
             self._connect()
@@ -90,18 +122,32 @@ class DolphinRenderer:
                 time.sleep(random.uniform(self.delay_min, self.delay_max))
                 self._page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-                # Wait for Cloudflare if needed
-                for _ in range(15):
+                # Wait for Cloudflare challenge to resolve (checks both title and body)
+                resolved = False
+                for wait_i in range(20):
                     title = self._page.title()
-                    if ("момент" not in title.lower() and
-                            "moment" not in title.lower() and
-                            "checking" not in title.lower()):
+                    html_snap = self._page.content()
+                    marker = self._detect_cloudflare(html_snap, title)
+                    if marker is None:
+                        resolved = True
                         break
-                    logger.debug(f"Waiting for Cloudflare: {title}")
-                    time.sleep(2)
+                    logger.warning(
+                        f"Detected interstitial/error HTML for {url}: marker={marker}"
+                    )
+                    time.sleep(3)
 
                 time.sleep(1.5)
                 html = self._page.content()
+
+                # Final check after waiting
+                if not resolved:
+                    marker = self._detect_cloudflare(html, self._page.title())
+                    if marker:
+                        logger.warning(f"Rejected error/interstitial page for {url}")
+                        raise Exception(
+                            f"Received Cloudflare / 504 / interstitial HTML instead of real page"
+                        )
+
                 if html and len(html) > 1000:
                     return html
                 logger.warning(f"Short response ({len(html) if html else 0}) for {url}")

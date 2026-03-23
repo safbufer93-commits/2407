@@ -120,13 +120,21 @@ class DolphinRenderer:
         for attempt in range(self.max_retries):
             try:
                 time.sleep(random.uniform(self.delay_min, self.delay_max))
-                self._page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                # Use "load" instead of "domcontentloaded" so JS (Turnstile) has time to start
+                self._page.goto(url, wait_until="load", timeout=60000)
+
+                # Wait before first check — give Turnstile JS time to execute
+                time.sleep(12)
 
                 # Wait for Cloudflare challenge to resolve (checks both title and body)
                 resolved = False
-                for wait_i in range(20):
-                    title = self._page.title()
-                    html_snap = self._page.content()
+                for wait_i in range(25):
+                    try:
+                        title = self._page.title()
+                        html_snap = self._page.content()
+                    except Exception as page_err:
+                        logger.warning(f"Page read error during CF wait ({wait_i}): {page_err}")
+                        break
                     marker = self._detect_cloudflare(html_snap, title)
                     if marker is None:
                         resolved = True
@@ -134,14 +142,21 @@ class DolphinRenderer:
                     logger.warning(
                         f"Detected interstitial/error HTML for {url}: marker={marker}"
                     )
-                    time.sleep(3)
+                    time.sleep(6)
 
-                time.sleep(1.5)
-                html = self._page.content()
+                time.sleep(2)
+                try:
+                    html = self._page.content()
+                except Exception as page_err:
+                    logger.warning(f"Page content read failed after CF wait: {page_err}")
+                    raise Exception(f"Page content unavailable after CF wait: {page_err}")
 
                 # Final check after waiting
                 if not resolved:
-                    marker = self._detect_cloudflare(html, self._page.title())
+                    try:
+                        marker = self._detect_cloudflare(html, self._page.title())
+                    except Exception:
+                        marker = self._detect_cloudflare(html, "")
                     if marker:
                         logger.warning(f"Rejected error/interstitial page for {url}")
                         raise Exception(
@@ -156,13 +171,12 @@ class DolphinRenderer:
             except Exception as e:
                 logger.warning(f"Dolphin fetch error ({attempt+1}): {e} for {url}")
                 time.sleep(3 * (attempt + 1))
-                if attempt >= 1:
-                    # Try reconnecting
-                    try:
-                        self._disconnect()
-                        self._connect()
-                    except Exception as e2:
-                        logger.error(f"Reconnect failed: {e2}")
+                # Reconnect on every failure, not just after first attempt
+                try:
+                    self._disconnect()
+                    self._connect()
+                except Exception as e2:
+                    logger.error(f"Reconnect failed: {e2}")
 
         logger.error(f"All retries failed for {url}")
         return None

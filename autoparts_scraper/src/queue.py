@@ -79,8 +79,19 @@ class TaskRunner:
     async def run_all(self, tasks: List[ScrapeTask]) -> List[ScrapeTask]:
         """Execute all tasks concurrently respecting limits. Returns completed tasks."""
         coros = [self._run_one(task) for task in tasks]
-        completed = await asyncio.gather(*coros, return_exceptions=False)
-        return list(completed)
+        results = await asyncio.gather(*coros, return_exceptions=True)
+        completed = []
+        for task, res in zip(tasks, results):
+            if isinstance(res, Exception):
+                task.status = TaskStatus.PARSE_ERROR
+                task.result = ScrapeResult(
+                    status=TaskStatus.PARSE_ERROR,
+                    error_message=str(res),
+                )
+                completed.append(task)
+            else:
+                completed.append(res)
+        return completed
 
     async def _run_one(self, task: ScrapeTask) -> ScrapeTask:
         adapter = self.adapters.get(task.site_id)
@@ -122,14 +133,12 @@ class TaskRunner:
                                 locale=self.config.LOCALE,
                             )
                             # Block images and fonts to speed up page load
-                            await context.route(
-                                "**/*",
-                                lambda route: (
-                                    route.abort()
-                                    if route.request.resource_type in ("image", "font", "media")
-                                    else route.continue_()
-                                ),
-                            )
+                            async def _handle_route(route):
+                                if route.request.resource_type in ("image", "font", "media"):
+                                    await route.abort()
+                                else:
+                                    await route.continue_()
+                            await context.route("**/*", _handle_route)
                             page = await context.new_page()
                             page.set_default_timeout(self.config.SELECTOR_TIMEOUT_MS)
                             page.set_default_navigation_timeout(self.config.NAVIGATION_TIMEOUT_MS)

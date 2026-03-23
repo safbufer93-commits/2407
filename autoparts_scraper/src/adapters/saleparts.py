@@ -2,20 +2,23 @@
 Adapter for sale-parts.ru
 
 Known issue: site shows Security Check (captcha) on entry.
-Behaviour: detect → return BLOCKED_CAPTCHA status with artifacts.
-Optional: "manual solve window" (headed mode, wait for operator).
+Default behaviour: detect → return BLOCKED_CAPTCHA status with artifacts.
+Optional: "manual solve window" (headed mode only, operator solves captcha).
 """
 from __future__ import annotations
+import asyncio
+import re
 from typing import List
 
 from .base import BaseSiteAdapter, OfferParsed, ScrapeResult, TaskStatus, MatchType
 from ..normalizer import normalize_brand, normalize_price, normalize_availability
 
-
 CAPTCHA_KEYWORDS = (
     "security check", "enter the code", "captcha", "recaptcha",
     "cloudflare", "проверка", "введите код",
 )
+# Seconds to wait for manual captcha solve (headed mode only)
+MANUAL_SOLVE_TIMEOUT_SEC = 90
 
 
 class SalepartsAdapter(BaseSiteAdapter):
@@ -39,14 +42,17 @@ class SalepartsAdapter(BaseSiteAdapter):
             scr, html = await self._save_artifacts(page, artifacts_dir, f"saleparts_captcha_{sku_norm}")
             log.warning(f"Sale-parts: captcha detected for {sku_norm}")
 
-            # Optional: manual solve window (headed browser, operator intervenes)
-            if getattr(config, "SALEPARTS_MANUAL_CAPTCHA", False):
-                log.info("Sale-parts: waiting for manual captcha solve (60s)...")
-                import asyncio
-                await asyncio.sleep(60)
-                content2 = await page.content()
-                if not self._is_captcha(content2):
-                    return await self._continue_after_captcha(page, sku_norm, sku_raw, config, log)
+            # Manual solve: only in headed mode and only if explicitly configured
+            if getattr(config, "SALEPARTS_MANUAL_CAPTCHA", False) and not config.HEADLESS:
+                log.info(f"Sale-parts: waiting up to {MANUAL_SOLVE_TIMEOUT_SEC}s for manual captcha solve")
+                deadline = asyncio.get_event_loop().time() + MANUAL_SOLVE_TIMEOUT_SEC
+                while asyncio.get_event_loop().time() < deadline:
+                    await asyncio.sleep(3)
+                    content2 = await page.content()
+                    if not self._is_captcha(content2):
+                        log.info("Sale-parts: captcha solved, continuing")
+                        return await self._parse_after_unblock(page, sku_norm, sku_raw, config, log)
+                log.warning("Sale-parts: captcha manual solve timed out")
 
             return ScrapeResult(
                 status=TaskStatus.BLOCKED_CAPTCHA,
@@ -59,47 +65,57 @@ class SalepartsAdapter(BaseSiteAdapter):
                 html_path=html,
             )
 
-        return await self._continue_after_captcha(page, sku_norm, sku_raw, config, log)
+        return await self._parse_after_unblock(page, sku_norm, sku_raw, config, log)
 
     def _is_captcha(self, content: str) -> bool:
         cl = content.lower()
         return any(kw in cl for kw in CAPTCHA_KEYWORDS)
 
-    async def _continue_after_captcha(self, page, sku_norm, sku_raw, config, log) -> ScrapeResult:
-        """Parse results after captcha is solved."""
+    async def _parse_after_unblock(self, page, sku_norm, sku_raw, config, log) -> ScrapeResult:
         offers: List[OfferParsed] = []
         card_url = page.url
         max_pages = getattr(config, "MAX_PAGES", 5)
+        page_no = 1
 
-        for page_no in range(1, max_pages + 1):
+        while True:
             try:
-                import re
-                rows = await page.locator("table tr, .product-item, .offer-row, .search-result").all()
+                rows = await page.locator("table tbody tr, .product-item, .offer-row, .search-result").all()
                 for row_no, row in enumerate(rows):
-                    text = await row.inner_text()
-                    price = normalize_price(text)
-                    if price is None:
+                    try:
+                        text = await row.inner_text()
+                        if "₽" not in text:
+                            continue
+                        price = normalize_price(text)
+                        if price is None:
+                            continue
+                        brand_m = re.search(r"([A-ZА-Я][A-ZА-Яa-zа-я\-]{1,})", text)
+                        brand = normalize_brand(brand_m.group(1) if brand_m else "")
+                        avail = normalize_availability(text)
+                        offers.append(OfferParsed(
+                            site=self.base_url, header_brand=brand, name="",
+                            sku=sku_norm, price=price, availability=avail,
+                            source_url=card_url, match_type=MatchType.UNKNOWN,
+                            page_no=page_no, row_no=row_no, sku_queried=sku_raw,
+                        ))
+                    except Exception:
                         continue
-                    brand_m = re.search(r"([А-ЯA-Z][А-ЯA-Za-z\-]{2,})", text)
-                    brand = normalize_brand(brand_m.group(1) if brand_m else "")
-                    avail = normalize_availability(text)
-                    offers.append(OfferParsed(
-                        site=self.base_url, header_brand=brand, name="",
-                        sku=sku_norm, price=price, availability=avail,
-                        source_url=card_url, match_type=MatchType.UNKNOWN,
-                        page_no=page_no, row_no=row_no, sku_queried=sku_raw,
-                    ))
             except Exception:
                 pass
 
-            if page_no >= max_pages:
+            if max_pages and page_no >= max_pages:
+                break
+
+            next_btn = page.get_by_role("link", name=str(page_no + 1)).first
+            try:
+                visible = await next_btn.is_visible(timeout=2000)
+            except Exception:
+                visible = False
+            if not visible:
                 break
             try:
-                next_btn = page.locator(f"a:has-text('{page_no + 1}')").first
-                if not await next_btn.is_visible(timeout=2000):
-                    break
                 await next_btn.click()
                 await page.wait_for_load_state(config.PAGE_LOAD_STATE)
+                page_no += 1
             except Exception:
                 break
 

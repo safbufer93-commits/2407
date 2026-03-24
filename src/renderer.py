@@ -1,13 +1,18 @@
 """
 Renderer module: uses Dolphin Anty browser via local CDP API.
-Falls back to direct Playwright if Dolphin not available.
+Features:
+  - Cookie persistence (save/load cookies.json)
+  - 2Captcha solver for reCAPTCHA v2 / Turnstile
+  - Residential proxy rotation
+  - Stealth via Dolphin Anty antidetect browser
 """
+import json
 import logging
 import os
 import random
 import re
 import time
-from typing import Optional
+from typing import Optional, List
 from urllib.parse import urlparse
 import requests
 
@@ -16,6 +21,31 @@ logger = logging.getLogger(__name__)
 DOLPHIN_API_URL = "http://localhost:3001/v1.0"
 DOLPHIN_PROFILE_ID = os.environ.get("DOLPHIN_PROFILE_ID", "759890630")
 MAX_SHOW_MORE_CLICKS = int(os.environ.get("MAX_SHOW_MORE_CLICKS", "25"))
+
+# 2Captcha config
+CAPTCHA_API_KEY = os.environ.get("CAPTCHA_API_KEY", "")
+
+# Cookie persistence file
+COOKIES_FILE = os.environ.get("COOKIES_FILE", "cookies.json")
+
+# Residential proxies list — set via env as comma-separated URLs
+# e.g. PROXIES=http://user:pass@host1:port,http://user:pass@host2:port
+_PROXIES_RAW = os.environ.get("PROXIES", "")
+PROXY_LIST: List[str] = [p.strip() for p in _PROXIES_RAW.split(",") if p.strip()]
+
+# Fallback User-Agent pool (Dolphin handles UA, but used as backup)
+_USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
+    "(KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+]
 
 # Markers in HTML body that indicate Cloudflare interstitial/challenge page
 _CF_BODY_MARKERS = [
@@ -37,6 +67,156 @@ _CF_BODY_MARKERS = [
     "nginx",
 ]
 
+
+# ---------------------------------------------------------------------------
+# Cookie persistence helpers
+# ---------------------------------------------------------------------------
+
+def load_cookies(path: str = COOKIES_FILE) -> Optional[list]:
+    """Load cookies from JSON file. Returns None if file missing or invalid."""
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            cookies = json.load(f)
+        logger.info(f"Loaded {len(cookies)} cookies from {path}")
+        return cookies
+    except Exception as e:
+        logger.warning(f"Failed to load cookies from {path}: {e}")
+        return None
+
+
+def save_cookies(cookies: list, path: str = COOKIES_FILE):
+    """Persist cookies list to JSON file."""
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(cookies, f, indent=2, ensure_ascii=False)
+        logger.info(f"Saved {len(cookies)} cookies to {path}")
+    except Exception as e:
+        logger.warning(f"Failed to save cookies to {path}: {e}")
+
+
+# ---------------------------------------------------------------------------
+# Proxy rotation helper
+# ---------------------------------------------------------------------------
+
+def pick_proxy() -> Optional[str]:
+    """Return a random proxy from PROXY_LIST, or None if list is empty."""
+    if not PROXY_LIST:
+        return None
+    proxy = random.choice(PROXY_LIST)
+    logger.debug(f"Selected proxy: {proxy}")
+    return proxy
+
+
+# ---------------------------------------------------------------------------
+# 2Captcha solver
+# ---------------------------------------------------------------------------
+
+class CaptchaSolver:
+    """
+    Solves reCAPTCHA v2 and Cloudflare Turnstile via 2Captcha API.
+    Requires CAPTCHA_API_KEY env variable.
+    """
+
+    BASE_URL = "http://2captcha.com"
+    POLL_INTERVAL = 5       # seconds between status checks
+    MAX_POLL_ATTEMPTS = 60  # ~5 minutes max wait
+
+    def __init__(self, api_key: str = CAPTCHA_API_KEY):
+        self.api_key = api_key
+
+    def _is_available(self) -> bool:
+        return bool(self.api_key)
+
+    def solve_recaptcha_v2(self, site_key: str, page_url: str) -> Optional[str]:
+        """Submit reCAPTCHA v2 to 2Captcha, wait for solution, return token."""
+        if not self._is_available():
+            logger.warning("2Captcha API key not set — skipping reCAPTCHA solve")
+            return None
+        try:
+            resp = requests.get(
+                f"{self.BASE_URL}/in.php",
+                params={
+                    "key": self.api_key,
+                    "method": "userrecaptcha",
+                    "googlekey": site_key,
+                    "pageurl": page_url,
+                    "json": 1,
+                },
+                timeout=15,
+            )
+            data = resp.json()
+            if data.get("status") != 1:
+                logger.warning(f"2Captcha submit failed: {data}")
+                return None
+            request_id = data["request"]
+            logger.info(f"2Captcha reCAPTCHA submitted, id={request_id}")
+            return self._poll_result(request_id)
+        except Exception as e:
+            logger.warning(f"2Captcha reCAPTCHA solve error: {e}")
+            return None
+
+    def solve_turnstile(self, site_key: str, page_url: str) -> Optional[str]:
+        """Submit Cloudflare Turnstile to 2Captcha, wait for solution."""
+        if not self._is_available():
+            logger.warning("2Captcha API key not set — skipping Turnstile solve")
+            return None
+        try:
+            resp = requests.get(
+                f"{self.BASE_URL}/in.php",
+                params={
+                    "key": self.api_key,
+                    "method": "turnstile",
+                    "sitekey": site_key,
+                    "pageurl": page_url,
+                    "json": 1,
+                },
+                timeout=15,
+            )
+            data = resp.json()
+            if data.get("status") != 1:
+                logger.warning(f"2Captcha Turnstile submit failed: {data}")
+                return None
+            request_id = data["request"]
+            logger.info(f"2Captcha Turnstile submitted, id={request_id}")
+            return self._poll_result(request_id)
+        except Exception as e:
+            logger.warning(f"2Captcha Turnstile solve error: {e}")
+            return None
+
+    def _poll_result(self, request_id: str) -> Optional[str]:
+        """Poll 2Captcha until solution is ready."""
+        for attempt in range(self.MAX_POLL_ATTEMPTS):
+            time.sleep(self.POLL_INTERVAL)
+            try:
+                resp = requests.get(
+                    f"{self.BASE_URL}/res.php",
+                    params={
+                        "key": self.api_key,
+                        "action": "get",
+                        "id": request_id,
+                        "json": 1,
+                    },
+                    timeout=10,
+                )
+                data = resp.json()
+                if data.get("status") == 1:
+                    token = data["request"]
+                    logger.info(f"2Captcha solved after {(attempt + 1) * self.POLL_INTERVAL}s")
+                    return token
+                if data.get("request") != "CAPCHA_NOT_READY":
+                    logger.warning(f"2Captcha unexpected response: {data}")
+                    return None
+            except Exception as e:
+                logger.warning(f"2Captcha poll error: {e}")
+        logger.warning("2Captcha: timed out waiting for solution")
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Renderer
+# ---------------------------------------------------------------------------
 
 class RendererUnavailableError(RuntimeError):
     pass
@@ -64,6 +244,12 @@ class DolphinRenderer:
         self.max_show_more_clicks = max(0, MAX_SHOW_MORE_CLICKS)
         self._consecutive_start_failures = 0
         self._start_failure_threshold = 3
+        self._captcha_solver = CaptchaSolver()
+        self._cookies_loaded = False
+
+    # ------------------------------------------------------------------
+    # Dolphin profile management
+    # ------------------------------------------------------------------
 
     @staticmethod
     def _is_duplicate_running_error(message: str) -> bool:
@@ -189,7 +375,9 @@ class DolphinRenderer:
                 port = automation.get("port")
                 ws_path = automation.get("wsEndpoint")
                 if not port or not ws_path:
-                    raise Exception(f"Dolphin start response missing automation data: {data}")
+                    raise Exception(
+                        f"Dolphin start response missing automation data: {data}"
+                    )
                 ws_endpoint = f"ws://localhost:{port}{ws_path}"
                 logger.info(f"Dolphin started: {ws_endpoint}")
                 self._consecutive_start_failures = 0
@@ -237,10 +425,7 @@ class DolphinRenderer:
         )
 
     def _connect(self):
-        """
-        Connect to Dolphin.
-        Reuse existing ws endpoint when possible.
-        """
+        """Connect to Dolphin. Reuse existing ws endpoint when possible."""
         if self._page is not None:
             return
         last_error = None
@@ -309,6 +494,38 @@ class DolphinRenderer:
         if not keep_ws:
             self._ws_endpoint = None
 
+    # ------------------------------------------------------------------
+    # Cookie helpers
+    # ------------------------------------------------------------------
+
+    def _restore_cookies(self):
+        """Load cookies from disk and inject into current context."""
+        if self._cookies_loaded or self._context is None:
+            return
+        cookies = load_cookies()
+        if cookies:
+            try:
+                self._context.add_cookies(cookies)
+                logger.info("Cookies restored into browser context")
+            except Exception as e:
+                logger.warning(f"Failed to inject cookies: {e}")
+        self._cookies_loaded = True
+
+    def _persist_cookies(self):
+        """Save current context cookies to disk."""
+        if self._context is None:
+            return
+        try:
+            cookies = self._context.cookies()
+            if cookies:
+                save_cookies(cookies)
+        except Exception as e:
+            logger.warning(f"Failed to persist cookies: {e}")
+
+    # ------------------------------------------------------------------
+    # Page interaction helpers
+    # ------------------------------------------------------------------
+
     @staticmethod
     def _looks_like_product_url(url: str) -> bool:
         """Heuristic: product pages usually end with a long numeric id in slug."""
@@ -344,10 +561,7 @@ class DolphinRenderer:
         return False
 
     def _prime_product_tabs(self, url: str):
-        """
-        Some product tab content is loaded lazily after click.
-        Prime important tabs before snapshotting page HTML.
-        """
+        """Prime lazy-loaded product tabs before snapshotting HTML."""
         if self._page is None or not self._looks_like_product_url(url):
             return
         for label in [
@@ -360,10 +574,7 @@ class DolphinRenderer:
             self._click_tab_if_present(label)
 
     def _expand_listing_show_more(self, url: str):
-        """
-        On listing pages 2407 can lazy-load extra products via "Показать еще".
-        Click it repeatedly before collecting HTML.
-        """
+        """Click 'Показать еще' repeatedly to expand lazy-loaded listings."""
         if self._page is None or self._looks_like_product_url(url):
             return
         if self.max_show_more_clicks <= 0:
@@ -396,19 +607,101 @@ class DolphinRenderer:
             logger.debug(f"Expanded listing via show-more clicks: {click_count} at {url}")
 
     def _is_error_html(self, html: str, url: str, silent: bool = False) -> bool:
-        """
-        Detect Cloudflare / waiting / gateway / Dolphin error pages
-        that should NOT be treated as valid category/product HTML.
-        """
+        """Detect Cloudflare / gateway / Dolphin error pages."""
         if not html:
             return True
         low = html.lower()
         for marker in _CF_BODY_MARKERS:
             if marker in low:
                 if not silent:
-                    logger.warning(f"Detected interstitial/error HTML for {url}: marker={marker}")
+                    logger.warning(
+                        f"Detected interstitial/error HTML for {url}: marker={marker}"
+                    )
                 return True
         return False
+
+    # ------------------------------------------------------------------
+    # Captcha detection & solving
+    # ------------------------------------------------------------------
+
+    def _try_solve_captcha(self, url: str) -> bool:
+        """
+        Detect reCAPTCHA v2 or Cloudflare Turnstile on current page
+        and solve via 2Captcha. Returns True if a solution was injected.
+        """
+        if self._page is None or not self._captcha_solver._is_available():
+            return False
+
+        # --- Cloudflare Turnstile ---
+        try:
+            turnstile_el = self._page.query_selector(
+                "div[class*='cf-turnstile'], iframe[src*='challenges.cloudflare.com']"
+            )
+            if turnstile_el:
+                site_key = turnstile_el.get_attribute("data-sitekey")
+                if site_key:
+                    logger.info(f"Turnstile detected sitekey={site_key}, solving via 2Captcha...")
+                    token = self._captcha_solver.solve_turnstile(site_key, url)
+                    if token:
+                        # Inject token into hidden input and submit
+                        self._page.evaluate(
+                            """(token) => {
+                                const inp = document.querySelector(
+                                    'input[name="cf-turnstile-response"]'
+                                );
+                                if (inp) inp.value = token;
+                                const form = document.querySelector('form');
+                                if (form) form.submit();
+                            }""",
+                            token,
+                        )
+                        try:
+                            self._page.wait_for_load_state("networkidle", timeout=15000)
+                        except Exception:
+                            pass
+                        logger.info("Turnstile token injected and form submitted")
+                        return True
+        except Exception as e:
+            logger.debug(f"Turnstile detection error: {e}")
+
+        # --- reCAPTCHA v2 ---
+        try:
+            recaptcha_el = self._page.query_selector(".g-recaptcha")
+            if recaptcha_el:
+                site_key = recaptcha_el.get_attribute("data-sitekey")
+                if site_key:
+                    logger.info(
+                        f"reCAPTCHA v2 detected sitekey={site_key}, solving via 2Captcha..."
+                    )
+                    token = self._captcha_solver.solve_recaptcha_v2(site_key, url)
+                    if token:
+                        self._page.evaluate(
+                            """(solution) => {
+                                const el = document.querySelector('#g-recaptcha-response');
+                                if (el) el.innerHTML = solution;
+                                const btn = document.querySelector('#submit-button')
+                                    || document.querySelector('button[type=submit]')
+                                    || document.querySelector('input[type=submit]');
+                                if (btn) btn.click();
+                            }""",
+                            token,
+                        )
+                        try:
+                            self._page.wait_for_navigation(
+                                wait_until="networkidle", timeout=15000
+                            )
+                        except Exception:
+                            pass
+                        logger.info("reCAPTCHA token injected and form submitted")
+                        return True
+        except Exception as e:
+            logger.debug(f"reCAPTCHA detection error: {e}")
+
+        return False
+
+    # ------------------------------------------------------------------
+    # Core fetch
+    # ------------------------------------------------------------------
 
     def _ensure_connected_page(self):
         if self._page is not None:
@@ -416,6 +709,8 @@ class DolphinRenderer:
         self._connect()
         if self._page is None:
             raise RuntimeError("Dolphin page is not initialized after connect")
+        # Restore saved cookies once after (re-)connecting
+        self._restore_cookies()
 
     def fetch_html(self, url: str) -> Optional[str]:
         self._ensure_connected_page()
@@ -450,12 +745,20 @@ class DolphinRenderer:
                         or "verify" in low_title
                     )
                     cf_in_body = self._is_error_html(html_snap, url, silent=True)
-                    if not cf_in_title and not cf_in_body:
+
+                    if cf_in_title or cf_in_body:
+                        # Attempt captcha solve on first CF encounter
+                        if wait_i == 0:
+                            solved = self._try_solve_captcha(url)
+                            if solved:
+                                time.sleep(5)
+                                continue
+                        logger.debug(
+                            f"Waiting for Cloudflare ({wait_i + 1}/25): title={title!r}"
+                        )
+                        time.sleep(6)
+                    else:
                         break
-                    logger.debug(
-                        f"Waiting for Cloudflare ({wait_i + 1}/25): title={title!r}"
-                    )
-                    time.sleep(6)
 
                 self._expand_listing_show_more(url)
                 self._prime_product_tabs(url)
@@ -475,7 +778,10 @@ class DolphinRenderer:
                         "Received Cloudflare / 504 / interstitial HTML instead of real page"
                     )
                 if html and len(html) > 1000:
+                    # Persist cookies after each successful fetch
+                    self._persist_cookies()
                     return html
+
                 logger.warning(f"Short response ({len(html) if html else 0}) for {url}")
                 raise RuntimeError(f"Short/invalid HTML for {url}")
 
@@ -485,11 +791,12 @@ class DolphinRenderer:
                     raise
                 logger.warning(f"Dolphin fetch error ({attempt + 1}): {e} for {url}")
                 time.sleep(3 * (attempt + 1))
-                # Reconnect on every failure, not just after the first attempt
+                # Reconnect on every failure
                 try:
                     self._disconnect(keep_ws=True, keep_pw_runtime=True)
                     time.sleep(2)
                     self._connect()
+                    self._restore_cookies()
                 except Exception as e2:
                     if isinstance(e2, RendererUnavailableError):
                         logger.error(f"Reconnect failed permanently: {e2}")
@@ -503,6 +810,7 @@ class DolphinRenderer:
                             self._disconnect(keep_ws=False, keep_pw_runtime=False)
                             time.sleep(2)
                             self._connect()
+                            self._restore_cookies()
                             continue
                         except Exception as e3:
                             logger.error(f"Reconnect after full reset failed: {e3}")
@@ -515,13 +823,17 @@ class DolphinRenderer:
         """Visit site to set Poland context."""
         self._ensure_connected_page()
         try:
-            self._page.goto("https://2407.pl/ru/", wait_until="domcontentloaded", timeout=30000)
+            self._page.goto(
+                "https://2407.pl/ru/", wait_until="domcontentloaded", timeout=30000
+            )
             time.sleep(3)
+            self._persist_cookies()
             logger.info("Poland context ready")
         except Exception as e:
             logger.warning(f"Poland setup error: {e}")
 
     def close(self):
+        self._persist_cookies()
         self._disconnect(keep_ws=False)
         self._stop_profile()
 

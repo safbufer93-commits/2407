@@ -119,103 +119,52 @@ def pick_proxy() -> Optional[str]:
 
 class CaptchaSolver:
     """
-    Solves reCAPTCHA v2 and Cloudflare Turnstile via 2Captcha API.
-    Requires CAPTCHA_API_KEY env variable.
+    Solves reCAPTCHA v2 and Cloudflare Turnstile via the official 2Captcha Python SDK.
+    Requires CAPTCHA_API_KEY env variable and: pip install 2captcha-python
+    SDK handles polling and error handling internally.
     """
-
-    BASE_URL = "http://2captcha.com"
-    POLL_INTERVAL = 5       # seconds between status checks
-    MAX_POLL_ATTEMPTS = 60  # ~5 minutes max wait
 
     def __init__(self, api_key: str = CAPTCHA_API_KEY):
         self.api_key = api_key
+        self._solver = None
 
     def _is_available(self) -> bool:
         return bool(self.api_key)
 
+    def _get_solver(self):
+        """Lazy-init TwoCaptcha SDK instance."""
+        if self._solver is None:
+            from twocaptcha import TwoCaptcha
+            self._solver = TwoCaptcha(self.api_key)
+        return self._solver
+
     def solve_recaptcha_v2(self, site_key: str, page_url: str) -> Optional[str]:
-        """Submit reCAPTCHA v2 to 2Captcha, wait for solution, return token."""
+        """Solve reCAPTCHA v2 via 2Captcha SDK, return token."""
         if not self._is_available():
             logger.warning("2Captcha API key not set — skipping reCAPTCHA solve")
             return None
         try:
-            resp = requests.get(
-                f"{self.BASE_URL}/in.php",
-                params={
-                    "key": self.api_key,
-                    "method": "userrecaptcha",
-                    "googlekey": site_key,
-                    "pageurl": page_url,
-                    "json": 1,
-                },
-                timeout=15,
-            )
-            data = resp.json()
-            if data.get("status") != 1:
-                logger.warning(f"2Captcha submit failed: {data}")
-                return None
-            request_id = data["request"]
-            logger.info(f"2Captcha reCAPTCHA submitted, id={request_id}")
-            return self._poll_result(request_id)
+            result = self._get_solver().recaptcha(sitekey=site_key, url=page_url)
+            token = result.get("code") if isinstance(result, dict) else str(result)
+            logger.info(f"2Captcha reCAPTCHA solved, token_len={len(token or '')}")
+            return token or None
         except Exception as e:
             logger.warning(f"2Captcha reCAPTCHA solve error: {e}")
             return None
 
     def solve_turnstile(self, site_key: str, page_url: str) -> Optional[str]:
-        """Submit Cloudflare Turnstile to 2Captcha, wait for solution."""
+        """Solve Cloudflare Turnstile via 2Captcha SDK, return token."""
         if not self._is_available():
             logger.warning("2Captcha API key not set — skipping Turnstile solve")
             return None
         try:
-            resp = requests.get(
-                f"{self.BASE_URL}/in.php",
-                params={
-                    "key": self.api_key,
-                    "method": "turnstile",
-                    "sitekey": site_key,
-                    "pageurl": page_url,
-                    "json": 1,
-                },
-                timeout=15,
-            )
-            data = resp.json()
-            if data.get("status") != 1:
-                logger.warning(f"2Captcha Turnstile submit failed: {data}")
-                return None
-            request_id = data["request"]
-            logger.info(f"2Captcha Turnstile submitted, id={request_id}")
-            return self._poll_result(request_id)
+            result = self._get_solver().turnstile(sitekey=site_key, url=page_url)
+            token = result.get("code") if isinstance(result, dict) else str(result)
+            logger.info(f"2Captcha Turnstile solved, token_len={len(token or '')}")
+            return token or None
         except Exception as e:
             logger.warning(f"2Captcha Turnstile solve error: {e}")
             return None
-
-    def _poll_result(self, request_id: str) -> Optional[str]:
-        """Poll 2Captcha until solution is ready."""
-        for attempt in range(self.MAX_POLL_ATTEMPTS):
-            time.sleep(self.POLL_INTERVAL)
-            try:
-                resp = requests.get(
-                    f"{self.BASE_URL}/res.php",
-                    params={
-                        "key": self.api_key,
-                        "action": "get",
-                        "id": request_id,
-                        "json": 1,
-                    },
-                    timeout=10,
-                )
-                data = resp.json()
-                if data.get("status") == 1:
-                    token = data["request"]
-                    logger.info(f"2Captcha solved after {(attempt + 1) * self.POLL_INTERVAL}s")
-                    return token
-                if data.get("request") != "CAPCHA_NOT_READY":
-                    logger.warning(f"2Captcha unexpected response: {data}")
-                    return None
-            except Exception as e:
-                logger.warning(f"2Captcha poll error: {e}")
-        logger.warning("2Captcha: timed out waiting for solution")
-        return None
 
 
 # ---------------------------------------------------------------------------
